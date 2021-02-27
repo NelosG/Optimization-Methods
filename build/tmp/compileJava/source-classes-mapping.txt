@@ -1,4 +1,0 @@
-firstLab/DichotomyOptimizer.java
- firstLab.DichotomyOptimizer
-firstLab/Optimizer.java
- firstLab.Optimizer

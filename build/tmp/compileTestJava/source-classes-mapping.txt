@@ -1,3 +1,0 @@
-firstLab/TestOptimizer.java
- firstLab.TestOptimizer
- firstLab.TestOptimizer$Pair
