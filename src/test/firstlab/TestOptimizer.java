@@ -14,7 +14,7 @@ import java.util.function.Function;
 public class TestOptimizer {
 
     private static Optimizer optimizer;
-    private static double EPS = .001;
+    private static final double EPS = .001;
     private static final List<Pair<Function<Double, Double>, Pair<Pair<Double, Double>, Double>>> functions = new LinkedList<>();
 
     static {
@@ -30,21 +30,19 @@ public class TestOptimizer {
         functions.add(new Pair<>(x -> 0.2 * x * Math.log(x) + Math.pow(x - 2.3, 2.0), new Pair<>(new Pair<>(.5, 2.5), 2.2219))); // [0.5,2.5] x = 2.2219
     }
 
-//    @Before
-//    public static void initOptimizer() {
-//        optimizer = new DichotomyOptimizer();
-//    }
+    @Before
+    public void initOptimizer() {
+        optimizer = new DichotomyOptimizer();
+    }
 
-//    @After
-//    public static void cleanOptimizer() {
-//        optimizer = null;
-//    }
+    @After
+    public void cleanOptimizer() {
+        optimizer = null;
+    }
 
     @Test
-    public static void testOptimizersResult() {
-        functions.forEach(p -> {
-            Assert.assertTrue(Math.abs(optimizer.optimize(p.s.f.f, p.s.f.s, EPS, p.f) - p.s.s) < EPS);
-        });
+    public void testOptimizersResult() {
+        functions.forEach(p -> Assert.assertTrue(Math.abs(optimizer.optimize(p.s.f.f, p.s.f.s, EPS, p.f) - p.s.s) < EPS));
     }
 
     private static class Pair<F, S> {
