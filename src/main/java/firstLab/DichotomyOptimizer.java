@@ -1,4 +1,4 @@
-package lab1;
+package firstLab;
 
 import java.util.function.Function;
 

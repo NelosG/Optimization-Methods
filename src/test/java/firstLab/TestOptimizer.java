@@ -45,8 +45,8 @@ public class TestOptimizer {
 
     private static class Pair<F, S> {
 
-        F f;
-        S s;
+        final F f;
+        final S s;
 
         public Pair(F f, S s) {
             this.f = f;
