@@ -1,7 +1,5 @@
-package firstlab;
+package firstLab;
 
-import lab1.DichotomyOptimizer;
-import lab1.Optimizer;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
