@@ -1,0 +1,4 @@
+lab1/DichotomyOptimizer.java
+ lab1.DichotomyOptimizer
+lab1/Optimizer.java
+ lab1.Optimizer
