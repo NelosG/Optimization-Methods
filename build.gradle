@@ -12,9 +12,10 @@ repositories {
 dependencies {
     testImplementation 'junit:junit:4.12'
     testRuntimeOnly 'junit:junit:4.12'
+    compile group: 'org.javatuples', name: 'javatuples', version: '1.2'
 }
 
 test {
     useJUnitPlatform()
-    include '**firstlab.TestOptimizer'
+    include '**firstlab**'
 }
