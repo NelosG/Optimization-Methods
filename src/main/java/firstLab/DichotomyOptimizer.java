@@ -5,15 +5,15 @@ import java.util.function.Function;
 public class DichotomyOptimizer implements Optimizer {
     @Override
     public double optimize(double l, double r, double eps, Function<Double, Double> func){
-        double mid;
-        while(r - l > eps){
-            mid = (l + r)/2;
-            double f1 = func.apply(mid - eps);
-            double f2 = func.apply(mid + eps);
+        while((r - l)/2 > eps){
+            double x1 = ( l + r - eps) / 2;
+            double x2 = (l + r + eps) / 2;
+            double f1 = func.apply(x1);
+            double f2 = func.apply(x2);
             if(f1 < f2){
-                r = mid;
+                r = x2;
             } else {
-                l = mid;
+                l = x1;
             }
         }
         return (l + r)/2;
