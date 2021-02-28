@@ -1,5 +1,6 @@
 package firstLab;
 
+import java.util.ArrayList;
 import java.util.function.Function;
 
 public class Fibonacci implements Optimizer {
@@ -8,14 +9,12 @@ public class Fibonacci implements Optimizer {
     @Override
     public double optimize(double leftBound, double rightBound, double eps, Function<Double, Double> func) {
         double a = leftBound, b = rightBound;
-
         int iterationsNum = 0;
         double condition = (rightBound - leftBound) / eps;
         while (fibonacciNum(iterationsNum++) - condition <= 0);
         iterationsNum--;
-        double fibonacciN2 = fibonacciNum(iterationsNum);
-        double x1 = a + (b - a) / fibonacciN2 * fibonacciNum(iterationsNum - 2);
-        double x2 = a + (b - a) / fibonacciN2 * fibonacciNum(iterationsNum - 1);
+        double x1 = a + (b - a) / fibonacciNum(iterationsNum) * fibonacciNum(iterationsNum - 2);
+        double x2 = a + (b - a) / fibonacciNum(iterationsNum) * fibonacciNum(iterationsNum - 1);
         double fX1 = func.apply(x1);
         double fX2 = func.apply(x2);
         for (int k = iterationsNum - 1; k > 1; k--) {
@@ -37,6 +36,17 @@ public class Fibonacci implements Optimizer {
     }
 
     private int fibonacciNum(int k) {
-        return k <= 1 ? 1 : fibonacciNum(k - 1) + fibonacciNum(k - 2);
+        if(fibonacciCache.size() <= k) {
+            int fibK = fibonacciNum(k - 1) + fibonacciNum(k - 2);
+            fibonacciCache.add(fibK);
+        }
+
+        return fibonacciCache.get(k);
+    }
+
+    private  static ArrayList<Integer> fibonacciCache = new ArrayList<>();
+    static {
+        fibonacciCache.add(1);
+        fibonacciCache.add(1);
     }
 }
