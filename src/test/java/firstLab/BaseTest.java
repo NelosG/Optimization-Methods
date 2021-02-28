@@ -1,6 +1,7 @@
 package firstLab;
 
 import org.javatuples.Quartet;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,20 +9,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
-public class TestOptimizer {
-
-    private static final double EPS = .00000001;
-    private static final List<Quartet<Double, Double,Function<Double, Double>, Double>> functions = new LinkedList<>();
-
-    @Test
-    public void DichotomyOptimizerTest() {
-        Assert.assertTrue("DichotomyOptimizerTest failed",
-                startTest(new DichotomyOptimizer(), "DichotomyOptimizer Err"));
-    }
-
-
-
-
+public abstract class BaseTest {
+    protected double EPS = 10e-8;
+    protected static List<Quartet<Double, Double, Function<Double, Double>, Double>> functions = new LinkedList<>();
+    protected Optimizer optimizer;
 
     static {
         /*1*/functions.add(new Quartet<>(-2., 3., x -> Math.pow(x, 2.0) + Math.exp(-0.35 * x), 0.16517)); // [-2,3] x = 0.16517
@@ -46,7 +37,8 @@ public class TestOptimizer {
     }
 
 
-    void run(int ind, Optimizer optimizer) {
+    void run(int ind) {
+        ind--;
         Quartet<Double, Double,Function<Double, Double>, Double> q = functions.get(ind);
         double expected = q.getValue3();
         double actual = optimizer.optimize(q.getValue0(), q.getValue1(), EPS, q.getValue2());
@@ -54,16 +46,58 @@ public class TestOptimizer {
                 ,Math.abs(actual) - Math.abs(expected) < EPS);
     }
 
-    boolean startTest(Optimizer optimizer, String errMess) {
-        boolean flag = true;
-        for (int i = 0; i < 10; i++) {
-            try {
-                run(i, optimizer);
-            } catch (AssertionError e) {
-                System.err.println(errMess + ": " + e.getMessage());
-                flag = false;
-            }
-        }
-        return flag;
+    @Test
+    public void TestExpression1() {
+        run(1);
+    }
+
+    @Test
+    public void TestExpression2() {
+        run(2);
+    }
+
+    @Test
+    public void TestExpression3() {
+        run(3);
+    }
+
+    @Test
+    public void TestExpression4() {
+        run(4);
+    }
+
+    @Test
+    public void TestExpression5() {
+        run(5);
+    }
+
+    @Test
+    public void TestExpression6() {
+        run(6);
+    }
+
+    @Test
+    public void TestExpression7() {
+        run(7);
+    }
+
+    @Test
+    public void TestExpression8() {
+        run(8);
+    }
+
+    @Test
+    public void TestExpression9() {
+        run(9);
+    }
+
+    @Test
+    public void TestExpression10() {
+        run(10);
+    }
+
+    @After
+    public void cleanOptimizer() {
+        optimizer = null;
     }
 }

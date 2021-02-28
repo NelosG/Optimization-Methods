@@ -2,7 +2,7 @@ package firstLab;
 
 import java.util.function.Function;
 
-public class DichotomyOptimizer implements Optimizer {
+public class Dichotomy implements Optimizer {
     @Override
     public double optimize(double l, double r, double eps, Function<Double, Double> func){
         while((r - l)/2 > eps){
