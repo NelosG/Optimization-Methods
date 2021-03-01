@@ -33,7 +33,7 @@ public class Fibonacci extends Optimizer {
         double fX1 = func.apply(x1);
         double fX2 = func.apply(x2);
 
-        log.writeln("Numb to " + iterationsNum, "x1", "x2", "fX1", "fX2", "a", "b",
+        log.writeln("Numb(to " + iterationsNum + ")", "x1", "x2", "fX1", "fX2", "a", "b",
                 "leftBound", "rightBound");
 
         for (int n = iterationsNum - 1; n > 1; n--) {
