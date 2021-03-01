@@ -24,14 +24,14 @@ public class Logger {
         outPutFile = out;
     }
 
-    public void addSheet(String sh, boolean add) {
+    public void addOrGetSheet(String sh, boolean addInSheetIfItExist) {
         sheet = book.getSheet(sh);
         if (sheet == null) {
             sheet = book.createSheet(sh);
             rowN = 0;
             cell = 0;
         } else {
-            if (add)
+            if (addInSheetIfItExist)
                 while (sheet.getRow(rowN) != null) {
                     rowN++;
                 }

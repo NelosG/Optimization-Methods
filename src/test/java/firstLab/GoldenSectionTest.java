@@ -6,7 +6,7 @@ public class GoldenSectionTest extends BaseTest {
 
     public GoldenSectionTest() {
         logger = new Logger();
-        logger.addSheet("GoldenSectionTest", true);
+        logger.addOrGetSheet("GoldenSectionTest", true);
     }
     @Before
     public void initOptimizer() {

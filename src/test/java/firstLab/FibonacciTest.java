@@ -6,7 +6,7 @@ public class FibonacciTest extends BaseTest {
 
     public FibonacciTest() {
         logger = new Logger();
-        logger.addSheet("FibonacciTest", true);
+        logger.addOrGetSheet("FibonacciTest", true);
     }
 
     @Before
