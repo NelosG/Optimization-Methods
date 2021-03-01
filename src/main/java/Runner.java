@@ -83,10 +83,6 @@ public class Runner {
         }
 
 
-        assert optimizer != null;
-
-        optimizer.toLog = toLog;
-
         if (toLog) {
             optimizer.log.addOrGetSheet(name, false);
         }
