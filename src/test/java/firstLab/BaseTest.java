@@ -5,15 +5,16 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
 public abstract class BaseTest {
     protected static List<Quintet<Double, Double, Function<Double, Double>, Double, Double>> functions = new LinkedList<>();
-    protected double EPS = 10e-5;
+    protected double EPS = 10e-9;
     protected Optimizer optimizer;
-
+    protected Logger logger;
     static {
         /*1*/
         functions.add(new Quintet<>(-2., 3., x -> Math.pow(x, 2.0) + Math.exp(-0.35 * x), 0.16517, 0.97111)); // [-2,3] x = 0.16517; y = 0.97111
@@ -48,6 +49,7 @@ public abstract class BaseTest {
 
 
     void run(int ind) {
+        logger.writeln("Test: " + ind);
         ind--;
         Quintet<Double, Double, Function<Double, Double>, Double, Double> q = functions.get(ind);
         double expected = q.getValue3();
@@ -59,9 +61,6 @@ public abstract class BaseTest {
                         " y = " + q.getValue4() + "\n                         " +
                         " but Actual: x = " + xactual + " y = " + yactual + "\n"
                 ,   Math.abs(yactual) - Math.abs(q.getValue4()) < EPS);
-        System.out.println("Expression: " + (ind + 1) + " Expected: x = " + expected +
-                " y = " + q.getValue4() + "\n                " +
-                "Actual: x = " + xactual + " y = " + yactual);
     }
 
     @Test
@@ -116,6 +115,11 @@ public abstract class BaseTest {
 
     @After
     public void cleanOptimizer() {
+        try {
+            logger.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
         optimizer = null;
     }
 }
