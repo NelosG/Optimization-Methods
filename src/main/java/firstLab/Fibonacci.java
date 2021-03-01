@@ -50,7 +50,7 @@ public class Fibonacci extends Optimizer {
                 x2 = b - (x1 - a);
                 fX2 = func.apply(x2);
             }
-            log.writeln( n, x1, x2, fX1, fX2, a, "b", leftBound, rightBound);
+            log.writeln( n, x1, x2, fX1, fX2, a, b, leftBound, rightBound);
         }
         return (x1 + x2) / 2;
     }
