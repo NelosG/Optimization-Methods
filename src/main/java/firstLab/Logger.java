@@ -2,6 +2,7 @@ package firstLab;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellUtil;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -61,13 +62,20 @@ public class Logger {
 
     public void writeln(Object... s) {
         for (Object ss : s) {
-            write(ss.toString());
+            write(ss);
         }
         nextLine();
     }
 
-    private void write(String s) {
-        row.createCell(this.cell++).setCellValue(s);
+    private void write(Object s) {
+        Cell c = row.createCell(this.cell++);
+        if(s.getClass() == Integer.class) {
+            c.setCellValue((Integer)s);
+        } else if(s.getClass() == Double.class) {
+            c.setCellValue((Double)s);
+        } else if(s.getClass() == String.class){
+            c.setCellValue((String) s);
+        } else throw new IllegalArgumentException("Object not Integer, Double or String");
         if(cell > maxCell) maxCell = cell;
     }
 }
