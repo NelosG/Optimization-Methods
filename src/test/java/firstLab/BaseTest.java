@@ -12,7 +12,7 @@ import java.util.function.Function;
 
 public abstract class BaseTest {
     protected static List<Quintet<Double, Double, Function<Double, Double>, Double, Double>> functions = new LinkedList<>();
-    protected double EPS = 10e-9;
+    protected double EPS = 1.E-4;
     protected Optimizer optimizer;
     protected Logger logger;
     static {
@@ -116,7 +116,7 @@ public abstract class BaseTest {
     @After
     public void cleanOptimizer() {
         try {
-            logger.close();
+            logger.writeInFile();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }

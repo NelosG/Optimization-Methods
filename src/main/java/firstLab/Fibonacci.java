@@ -27,7 +27,6 @@ public class Fibonacci extends Optimizer {
         double condition = (rightBound - leftBound) / eps;
         while (fibonacciNum(iterationsNum++) - condition <= 0) ;
         iterationsNum--;
-        System.out.println(iterationsNum);
         double x1 = a + (b - a) / fibonacciNum(iterationsNum) * fibonacciNum(iterationsNum - 2);
         double x2 = a + (b - a) / fibonacciNum(iterationsNum) * fibonacciNum(iterationsNum - 1);
         double fX1 = func.apply(x1);

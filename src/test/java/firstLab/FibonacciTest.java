@@ -5,7 +5,8 @@ import org.junit.Before;
 public class FibonacciTest extends BaseTest {
 
     public FibonacciTest() {
-        logger = new Logger("FibonacciTest", true);
+        logger = new Logger();
+        logger.addSheet("FibonacciTest", true);
     }
 
     @Before

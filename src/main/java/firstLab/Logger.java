@@ -17,11 +17,14 @@ public class Logger {
     private int maxCell = 0;
     private boolean changed = false;
 
-    public Logger(String sh) {
-        this(sh, false);
+    public Logger() {
+
+    }
+    public Logger(String out) {
+        outPutFile = out;
     }
 
-    public Logger(String sh, boolean add) {
+    public void addSheet(String sh, boolean add) {
         sheet = book.getSheet(sh);
         if (sheet == null) {
             sheet = book.createSheet(sh);
@@ -49,9 +52,16 @@ public class Logger {
         changed = false;
     }
 
-    public void close() throws IOException {
-        if(changed)writeInFile();
+    public void reset() throws IOException {
+        reset(false);
+    }
+
+    public void reset(boolean write) throws IOException {
+        if(changed && write)writeInFile();
         book.close();
+        book = new HSSFWorkbook();
+        rowN = 0;
+        cell = 0;
     }
 
     public void nextLine() {
