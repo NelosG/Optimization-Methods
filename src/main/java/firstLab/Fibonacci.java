@@ -35,7 +35,7 @@ public class Fibonacci extends Optimizer {
         forLog("Numb(to " + iterationsNum + ")", "x1", "x2", "fX1", "fX2", "a", "b",
                 "leftBound", "rightBound");
 
-        for (int n = iterationsNum - 1; n > 1; n--) {
+        for (int n = 1; n <= iterationsNum; n++) {
             if (fX1 - fX2 <= 0) {
                 b = x2;
                 x2 = x1;
