@@ -15,6 +15,13 @@ public abstract class BaseTest {
     protected double EPS = 1.E-4;
     protected Optimizer optimizer;
     protected Logger logger;
+
+    public BaseTest(String str) {
+        logger = new Logger();
+        logger.addOrGetSheet(str, true);
+    }
+
+
     static {
         /*1*/
         functions.add(new Quintet<>(-2., 3., x -> Math.pow(x, 2.0) + Math.exp(-0.35 * x), 0.16517, 0.97111)); // [-2,3] x = 0.16517; y = 0.97111
@@ -29,7 +36,7 @@ public abstract class BaseTest {
         functions.add(new Quintet<>(0.5, 4., x -> x - Math.log(x), 1., 1.)); // [0.5,4] x = 1. | 0.999991; y = 1.
 
         /*5*/
-        functions.add(new Quintet<>(0.1, 2.5, x -> 10 * x * Math.log(x) + Math.pow(x, 2.0) / 2, 0.382212, -3.74908)); // [0.1,2.5] x = 0.382212; y = -3.74908
+        functions.add(new Quintet<>(0.1, 2.5, x -> 10 * x * Math.log(x) - Math.pow(x, 2.0) / 2, 0.382212, -3.74908)); // [0.1,2.5] x = 0.382212; y = -3.74908
 
         /*6*/
         functions.add(new Quintet<>(-0.5, 0.5, x -> -5 * Math.pow(x, 5.0) + 4 * Math.pow(x, 4.0) - 12 * Math.pow(x, 3.0) + 11 * Math.pow(x, 2.0) - 2 * x + 1, 0.10986, 0.897633)); // [0.1,2.5] x = 0.10986; y = 0.897633
@@ -57,10 +64,15 @@ public abstract class BaseTest {
         xactual -= xactual % EPS;
         double yactual = q.getValue2().apply(xactual);
         yactual -= yactual % EPS;
+        logger.writeln("", "x", "y");
+        logger.writeln("Expected", expected, q.getValue4());
+        logger.writeln("Actual", xactual, yactual);
+        logger.writeln("Difference", Math.abs(xactual) - Math.abs(expected),
+                Math.abs(yactual) - Math.abs(q.getValue4()));
         Assert.assertTrue("Expression: " + (ind + 1) + " Expected: x = " + expected +
                         " y = " + q.getValue4() + "\n                         " +
                         " but Actual: x = " + xactual + " y = " + yactual + "\n"
-                ,   Math.abs(yactual) - Math.abs(q.getValue4()) < EPS);
+                ,   Math.abs(Math.abs(yactual) - Math.abs(q.getValue4())) < EPS);
     }
 
     @Test

@@ -5,8 +5,11 @@ import org.junit.Before;
 public class FibonacciTest extends BaseTest {
 
     public FibonacciTest() {
-        logger = new Logger();
-        logger.addOrGetSheet("FibonacciTest", true);
+        this("FibonacciTest");
+    }
+
+    private FibonacciTest(String s) {
+        super(s);
     }
 
     @Before

@@ -5,9 +5,13 @@ import org.junit.Before;
 public class GoldenSectionTest extends BaseTest {
 
     public GoldenSectionTest() {
-        logger = new Logger();
-        logger.addOrGetSheet("GoldenSectionTest", true);
+        this("GoldenSectionTest");
     }
+
+    private GoldenSectionTest(String s) {
+        super(s);
+    }
+
     @Before
     public void initOptimizer() {
         optimizer = new GoldenSection(logger);
