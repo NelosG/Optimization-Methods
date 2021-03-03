@@ -14,7 +14,7 @@ public class Brent extends Optimizer {
     }
 
 
-    //::TODO падает на 7 тесте
+    //::TODO falls at 7 expr
     @Override
     public double optimize(double l, double r, double eps, Function<Double, Double> func) {
         double k = (3 - Math.sqrt(5)) / 2;
