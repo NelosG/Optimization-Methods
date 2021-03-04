@@ -34,9 +34,9 @@ public class Parabolas extends Optimizer {
             double znam = (2 * ((x - l) * (fx - fr) - (x - r) * (fx - fl)));
             //to protect from NaN
             if(chisl == 0.0 && znam == 0.0) {
-                if(u == x)
+                if( x == u)
                     break;
-                u = x;
+                u = x - 1;
             } else u = x - chisl / znam;
             double fu = func.apply(u);
             if (fu > fx) {
