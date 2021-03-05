@@ -1,6 +1,7 @@
 import firstLab.Logger;
 import firstLab.Optimizer;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,7 +45,7 @@ public class Runner {
         Logger logger = null;
         if (toLog) {
             try {
-                Files.createDirectory(Path.of(".\\Logs" + task.taskName));
+                Files.createDirectory(Path.of("." + File.separator + "Logs" + task.taskName));
             } catch (Exception ignored) {
             }
             logger = new Logger();
@@ -96,7 +97,7 @@ public class Runner {
             optimizer.forLog("Actual:", resultX, resultY);
             optimizer.forLog("Difference:", Math.abs(task.expectedX - resultX), Math.abs(task.expectedY - resultY));
             try {
-                optimizer.log.writeInFile(".\\Logs" + task.taskName + "\\" + eps + "Log.xls");
+                optimizer.log.writeInFile("." + File.separator + "Logs" + task.taskName + File.separator + eps + "Log.xls");
             } catch (IOException e) {
                 System.err.println("Can't write log");
             }
