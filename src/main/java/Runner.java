@@ -39,9 +39,9 @@ public class Runner {
         return this;
     }
 
-    public void runTask(Task task) {
+    public Runner runTask(Task task) {
         if (forRun.isEmpty())
-            return;
+            return this;
         Logger logger = null;
         if (toLog) {
             try {
@@ -70,6 +70,7 @@ public class Runner {
             }
             i++;
         }
+        return this;
     }
 
     private void runOne(Task task, String name, Double eps) {

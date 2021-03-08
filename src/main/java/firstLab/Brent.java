@@ -1,6 +1,5 @@
 package firstLab;
 
-import java.util.ArrayList;
 import java.util.function.Function;
 
 public class Brent extends Optimizer {
@@ -13,54 +12,50 @@ public class Brent extends Optimizer {
         super(l);
     }
 
-
-    //::TODO falls at 7 expr
     @Override
     public double optimize(double l, double r, double eps, Function<Double, Double> func) {
-        double k = (3 - Math.sqrt(5)) / 2;
-        double x, w, v;
-        double a = l;
-        double c = r;
-        x = w = v = (a + c) / 2;
-        double fx, fw, fv;
-        fx = fw = fv = func.apply(x);
-        double d, e;
-        d = e = c - a;
+        double K = (3 - Math.sqrt(5)) / 2;
+        double a = l, c = r;
+        double x = a + K * (c - a), w = x, v = x;
+        double fX = func.apply(x), fW = fX, fV = fX;
+        double d = c - a, e = d;
+        double u = 0, fU;
+        boolean parabolaU;
         while (d > eps) {
-            double g;
-            g = e;
+            parabolaU = false;
+            double g = e;
             e = d;
-            double u;
-            if (!(fx == fw || fx == fv || fv == fw)) {
-                u = x - (Math.pow((x - w), 2) * (fx - fv) -
-                        Math.pow((x - v), 2) * (fx - fw)) / (2 * ((x - w) * (fx - fv) - (x - v) * (fx - fw)));
-
-                if (u >= a + eps && u <= c - eps && Math.abs(u - x) < g / 2) {
-                    d = Math.abs(u - x);
-                } else {
-                    if (x < (c - a) / 2) {
-                        u = a + k * (c - x);
-                        d = c - x;
-                    } else {
-                        u = c - k * (x - a);
-                        d = x - a;
+            double tol = eps * Math.abs(x) + eps / 10;
+            if (Math.abs(x - (a + c) / 2) + (c - a) / 2 - 2 * tol <= 0) {
+                break;
+            }
+            if (!(x == w || x == v || w == v || fX == fW || fX == fV || fV == fW)) {
+                u = (x + w - (fW - fX) / (w - x) / ((fV - fX) / (v - x) - (fW - fX) / (w - x)) / (v - w)) / 2;
+                if (u - a >= 0 && c - u >= 0 && Math.abs(u - x) - g / 2 < 0) {
+                    parabolaU = true;
+                    if (u - a - 2 * tol < 0 || c - u - 2 * tol < 0) {
+                        u = x - Math.signum(x - (a + c) / 2) * tol;
                     }
-                }
-            } else {
-                if (x < (c - a) / 2) {
-                    u = x + k * (c - x);
-                    d = c - x;
                 } else {
-                    u = x - k * (x - a);
-                    d = x - a;
-                }
-                if (Math.abs(u - x) < eps) {
-                    u = x + Math.signum(u - x) * eps;
+                    parabolaU = false;
                 }
             }
-            double fu = func.apply(u);
-            if (fu <= fx) {
-                if (u >= x) {
+            if (!parabolaU) {
+                if (x - (a + c) / 2 < 0) {
+                    u = x + K * (c - x);
+                    e = c - x;
+                } else {
+                    u = x - K * (x - a);
+                    e = x - a;
+                }
+            }
+            if (Math.abs(u - x) - tol < 0) {
+                u = x + Math.signum(u - x) * tol;
+            }
+            d = Math.abs(u - x);
+            fU = func.apply(u);
+            if (fU - fX <= 0) {
+                if (u - x >= 0) {
                     a = x;
                 } else {
                     c = x;
@@ -68,28 +63,26 @@ public class Brent extends Optimizer {
                 v = w;
                 w = x;
                 x = u;
-                fv = fw;
-                fw = fx;
-                fx = fu;
+                fV = fW;
+                fW = fX;
+                fX = fU;
             } else {
-                if (u >= x) {
+                if (u - x >= 0) {
                     c = u;
                 } else {
                     a = u;
                 }
-                if (fu <= fw || w == x) {
+                if (fU - fW <= 0 || w == x) {
                     v = w;
                     w = u;
-                    fv = fw;
-                    fw = fu;
-                } else {
-                    if (fu <= fv || v == x || v == w) {
-                        v = u;
-                        fv = fu;
-                    }
+                    fV = fW;
+                    fW = fU;
+                } else if (fU - fV <= 0 || v == x || v == w) {
+                    v = u;
+                    fV = fU;
                 }
             }
         }
-        return (a + c) / 2;
+        return x;
     }
 }
