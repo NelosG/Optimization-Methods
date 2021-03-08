@@ -53,7 +53,6 @@ public class Parabolas extends Optimizer {
             }
             k++;
         }
-        System.out.println("EPSILON = " + eps + " Step: " + k);
         return (l + r) / 2;
     }
 }
