@@ -21,7 +21,9 @@ public class GoldenSection extends Optimizer {
         double x2 = a + (Math.sqrt(5) - 1) * (b - a) / 2;
         double fX1 = func.apply(x1);
         double fX2 = func.apply(x2);
-        forLog("x1", "x2", "fX1", "fX2", "a", "b", "leftBound", "rightBound");
+        forLog("iter N","x1", "x2", "fX1", "fX2", "a", "b", "length", "prev/now");
+        double prev = 0;
+        int k = 1;
         while ((b - a) / 2 > eps) {
             if (fX1 - fX2 <= 0) {
                 b = x2;
@@ -36,7 +38,9 @@ public class GoldenSection extends Optimizer {
                 x2 = a + TAU * (b - a);
                 fX2 = func.apply(x2);
             }
-            forLog(x1, x2, fX1, fX2, a, b, leftBound, rightBound);
+            forLog(k,x1, x2, fX1, fX2, a, b, Math.abs(a-b), prev/(a + b) / 2);
+            k++;
+            prev = (a + b) / 2;
         }
         return (a + b) / 2;
     }

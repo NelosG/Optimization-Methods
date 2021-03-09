@@ -5,17 +5,19 @@ import java.util.function.Function;
 public class Dichotomy extends Optimizer {
 
     public Dichotomy() {
-       super();
+        super();
     }
 
     public Dichotomy(Logger l) {
-       super(l);
+        super(l);
     }
 
     @Override
     public double optimize(double l, double r, double eps, Function<Double, Double> func) {
-        forLog("x1", "x2", "f1", "f2", "l", "r");
-        forLog("null", "null", "null", "null", l, r);
+        forLog("iter N", "x1", "x2", "f1", "f2", "l", "r", "abs(r-l)", "prev/now");
+        forLog(0, "null", "null", "null", "null", l, r, Math.abs(r-l), 0);
+        int k = 1;
+        double prev = 0;
         while ((r - l) / 2 > eps) {
             double x1 = (l + r - eps) / 2;
             double x2 = (l + r + eps) / 2;
@@ -26,7 +28,9 @@ public class Dichotomy extends Optimizer {
             } else {
                 l = x1;
             }
-            forLog(x1, x2, f1, f2, l, r);
+            forLog(k,x1, x2, f1, f2, l, r, Math.abs(r-l), prev/(l + r) / 2);
+            prev = (l + r) / 2;
+            k++;
         }
         return (l + r) / 2;
     }
