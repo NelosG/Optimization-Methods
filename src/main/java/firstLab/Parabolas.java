@@ -34,7 +34,6 @@ public class Parabolas extends Optimizer {
                 u = x;
             } else u = x - numerator / denominator;
             double fu = func.apply(u);
-            forLog(x, u, fu, l, r, fl, fr);
             if (fu > fx) {
                 if (u > x) {
                     r = u;
