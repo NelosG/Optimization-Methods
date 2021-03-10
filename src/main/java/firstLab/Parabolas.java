@@ -18,13 +18,18 @@ public class Parabolas extends Optimizer {
     public double optimize(double l, double r, double eps, Function<Double, Double> func) {
         double fl = func.apply(l);
         double fr = func.apply(r);
-        double x = (l+r)/2.;
+        Random rand = new Random();
+        double x = l + (r-l)*rand.nextDouble();
         double fx = func.apply(x);
+        while(!(fl >= fx && fx <= fr)) {
+            x = l + (r-l)*rand.nextDouble();
+            fx = func.apply(x);
+        }
         double u = 1.0/0.0;
         int k = 1;
         forLog("iter N", "u", "x", "l", "r", "prev/now");
         double prev = 0;
-        while (r - l > eps) {
+        while ((r - l)/2 > eps) {
             double numerator =Math.pow(x - l, 2) * (fx - fr) -Math.pow(x - r, 2) * (fx - fl);
             double denominator = (2 * ((x - l) * (fx - fr) - (x - r) * (fx - fl)));
             //to protect from NaN

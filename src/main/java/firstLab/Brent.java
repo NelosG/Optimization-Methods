@@ -21,6 +21,8 @@ public class Brent extends Optimizer {
         double d = c - a, e = d;
         double u = 0, fU;
         boolean parabolaU;
+        forLog("iter N", "x", "w", "v", "u", "fX", "fW", "fV", "fU", "a", "c");
+        int k = 1;
         while (d > eps) {
             parabolaU = false;
             double g = e;
@@ -36,8 +38,6 @@ public class Brent extends Optimizer {
                     if (u - a - 2 * tol < 0 || c - u - 2 * tol < 0) {
                         u = x - Math.signum(x - (a + c) / 2) * tol;
                     }
-                } else {
-                    parabolaU = false;
                 }
             }
             if (!parabolaU) {
@@ -82,6 +82,7 @@ public class Brent extends Optimizer {
                     fV = fU;
                 }
             }
+            forLog(k,x, w, v, u, fX, fW, fV, fU, a, c);
         }
         return x;
     }
