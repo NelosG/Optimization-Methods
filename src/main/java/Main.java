@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) {
         new Runner(true)
-                .addForRun("Dichotomy", 1.E-15)
+                .addForRun("Dichotomy", 1.E-14)
                 .addForRun("Fibonacci", 1.E-8)
                 .addForRun("GoldenSection", 1.E-15)
                 .addForRun("Parabolas", 1.E-15)
@@ -14,6 +14,6 @@ public class Main {
 //                        -1., 4., 3.41488, -167.439));
                         .runTask(new Task("NotUnimodal",
                         x -> (x-1.4)*(x-3)*(x-5)*(x-2)*(x-3)*(x-4),
-                        1.4, 5., 4.696, -5.408));
+                        1.2, 5.1, 4.69606, -5.40806));
     }
 }
