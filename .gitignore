@@ -2,3 +2,4 @@
 /build/
 /.gradle/
 *.xls
+.DS_Store
