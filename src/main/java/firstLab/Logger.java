@@ -86,6 +86,8 @@ public class Logger {
         Cell c = row.createCell(this.cell++);
         if (s.getClass() == Integer.class) {
             c.setCellValue((Integer) s);
+        } else if (s.getClass() == Long.class) {
+            c.setCellValue((Long) s);
         } else if (s.getClass() == Double.class) {
             c.setCellValue((Double) s);
         } else if (s.getClass() == String.class) {
