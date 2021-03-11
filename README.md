@@ -7,3 +7,6 @@
 - метод парабол, 
 - комбинированный метод Брента.
 - Функция: f(x) = log10(x - 2) ^ 2 + log10(10 - x) ^ 2.0 - x ^ 0.2 -> min на интервале [6;9.9]
+
+
+- **[Report](https://github.com/AntonAsmirko/Optimization-Methods/tree/main/Report)**
