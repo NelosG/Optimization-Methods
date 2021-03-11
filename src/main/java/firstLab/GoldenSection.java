@@ -38,9 +38,9 @@ public class GoldenSection extends Optimizer {
                 x2 = a + TAU * (b - a);
                 fX2 = func.apply(x2);
             }
-            forLog(k,x1, x2, fX1, fX2, a, b, Math.abs(a-b), prev/(a + b) / 2);
+            forLog(k,x1, x2, fX1, fX2, a, b, Math.abs(a-b), prev/(Math.abs(a-b)));
             k++;
-            prev = (a + b) / 2;
+            prev = Math.abs(a-b);
         }
         return (a + b) / 2;
     }

@@ -49,8 +49,8 @@ public class Fibonacci extends Optimizer {
                 x2 = b - (x1 - a);
                 fX2 = func.apply(x2);
             }
-            forLog( n, x1, x2, fX1, fX2, a, b, Math.abs(a-b), prev/(x1 + x2) / 2);
-            prev = (x1 + x2) / 2;
+            forLog( n, x1, x2, fX1, fX2, a, b, Math.abs(a-b), prev/(Math.abs(a-b)));
+            prev = Math.abs(a-b);
         }
         return (x1 + x2) / 2;
     }

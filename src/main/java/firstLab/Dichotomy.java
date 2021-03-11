@@ -28,8 +28,8 @@ public class Dichotomy extends Optimizer {
             } else {
                 l = x1;
             }
-            forLog(k,x1, x2, f1, f2, l, r, Math.abs(r-l), prev/(l + r) / 2);
-            prev = (l + r) / 2;
+            forLog(k,x1, x2, f1, f2, l, r, Math.abs(r-l), prev/(Math.abs(r-l)));
+            prev = Math.abs(r-l);
             k++;
         }
         return (l + r) / 2;

@@ -27,7 +27,7 @@ public class Parabolas extends Optimizer {
         }
         double u = 1.0/0.0;
         int k = 1;
-        forLog("iter N", "u", "x", "l", "r", "prev/now");
+        forLog("iter N", "u", "x", "l", "r", "abs(l-r)", "prev/now");
         double prev = 0;
         while ((r - l)/2 > eps) {
             double numerator =Math.pow(x - l, 2) * (fx - fr) -Math.pow(x - r, 2) * (fx - fl);
@@ -58,8 +58,8 @@ public class Parabolas extends Optimizer {
                 x = u;
                 fx = fu;
             }
-            forLog(k, u, x, l, r, prev/(l + r) / 2);
-            prev = (l + r) / 2;
+            forLog(k, u, x, l, r, Math.abs(l-r), prev/Math.abs(l-r));
+            prev = Math.abs(l-r);
             k++;
         }
         return (l + r) / 2;
