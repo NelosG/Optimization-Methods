@@ -23,7 +23,7 @@ public class Dichotomy extends Optimizer {
             double x2 = (l + r + eps) / 2;
             double f1 = func.apply(x1);
             double f2 = func.apply(x2);
-            if (f1 < f2) {
+            if (f1 <= f2) {
                 r = x2;
             } else {
                 l = x1;
