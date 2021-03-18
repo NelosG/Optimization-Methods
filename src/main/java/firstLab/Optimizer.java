@@ -9,7 +9,7 @@ public abstract class Optimizer {
     public Logger log;
     public boolean toLog;
 
-    public ArrayList<ArrayList<Number>> array = new ArrayList<>();
+    public ArrayList<ArrayList<Double>> array = new ArrayList<>();
 
     public Optimizer() {
         this(null);
@@ -30,9 +30,15 @@ public abstract class Optimizer {
         for(Object s : o)
             if(!(s instanceof Number))
                 return;
-        ArrayList<Number> temp = Arrays.stream(o)
-                .map(s -> (Number) s)
-                .collect(Collectors.toCollection(ArrayList<Number>::new));
+        ArrayList<Double> temp = Arrays.stream(o)
+                .map(s ->{
+                    if(s instanceof Integer)
+                        return (Double)(double)(int) s;
+                    if(s instanceof Long)
+                        return (Double)(double)(long) s;
+                    return (Double)s;
+                })
+                .collect(Collectors.toCollection(ArrayList<Double>::new));
         if (!temp.isEmpty())
             array.add(temp);
     }
