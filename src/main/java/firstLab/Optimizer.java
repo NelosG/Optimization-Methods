@@ -35,9 +35,10 @@ public abstract class Optimizer {
         int k = 0;
         Pair<Double> p = new Pair<>(0.,0.);
         for(Object s : o) {
-            if(k % 2 == 0 && k != 0) {
+            if(k % 2 == 1) {
                 p.second = toDouble(s);
                 temp.add(p);
+                p =new Pair<>(0.,0.);
             } else {
                 p.first = toDouble(s);
             }
@@ -54,8 +55,8 @@ public abstract class Optimizer {
         return (Double)s;
     }
 
-    static class Pair <T> {
-        T first, second;
+    public static class Pair <T> {
+        public T first, second;
         Pair(T a, T b) {
             this.first = a;
             this.second = b;
