@@ -83,7 +83,8 @@ public class Brent extends Optimizer {
                 }
             }
             forLog(k, x, w, v, u, fX, fW, fV, fU, a, c);
-            toMass(x,fX, w, fW, v, fV, u, fU);
+            // x - ??? ???/ u ??? ????????/ v ? w - ???????
+            toMass(x,fX,  u, fU, w, fW, v, fV);
             k++;
         }
         return x;
