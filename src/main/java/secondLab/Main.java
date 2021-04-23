@@ -11,7 +11,7 @@ public class Main {
     static double eps = 1e-6;
     static List<Long> iter = new ArrayList<>();
     public static void main(String[] args) {
-        List<Vector> A = new ArrayList<>(Collections.nCopies(2, new Vector()));
+        List<Vector> A = new ArrayList<>(Collections.nCopies(2, null));
         Vector tmp = new Vector();
         tmp.add(2.);
         tmp.add(2.);
