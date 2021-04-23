@@ -5,20 +5,19 @@ import org.apache.commons.math3.linear.RealVector;
 
 
 public abstract class AbstractSolver {
-    protected double epsilon, alpha;
+    protected double epsilon, alpha = 10;
     protected long iterations, allIterations;
-    protected QuadraticFunction quadraticFunction;
+    protected QuadrFunction quadrFunction;
 
-    public AbstractSolver(QuadraticFunction quadraticFunction, double epsilon) {
+    public AbstractSolver(QuadrFunction quadrFunction, double epsilon) {
         this.epsilon = epsilon;
-        this.quadraticFunction = quadraticFunction;
-        this.alpha = 10;
+        this.quadrFunction = quadrFunction;
     }
 
     public Pair findMin() {
-        RealVector x = new ArrayRealVector(quadraticFunction.getN());
-        double xFunc = quadraticFunction.apply(x);
-        RealVector gradient = quadraticFunction.gradient(x);
+        RealVector x = new ArrayRealVector(quadrFunction.size());
+        double xFunc = quadrFunction.apply(x);
+        RealVector gradient = quadrFunction.gradient(x);
         double length = VectorHelper.length(gradient);
         if (length < epsilon) {
             return new Pair(x, xFunc);

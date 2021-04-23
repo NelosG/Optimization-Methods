@@ -1,11 +1,10 @@
 package secondLab;
 
-import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
 public class GradientDescent extends AbstractSolver {
-    public GradientDescent(QuadraticFunction quadraticFunction, double epsilon) {
-        super(quadraticFunction, epsilon);
+    public GradientDescent(QuadrFunction quadrFunction, double epsilon) {
+        super(quadrFunction, epsilon);
     }
 
     @Override
@@ -14,11 +13,11 @@ public class GradientDescent extends AbstractSolver {
         while (length >= epsilon) {
             ++iterations;
             RealVector y = x.add(gradient.mapMultiply(-alpha / length));
-            double yFunc = quadraticFunction.apply(y);
+            double yFunc = quadrFunction.apply(y);
             if (xFunc > yFunc) {
                 x = y;
                 xFunc = yFunc;
-                gradient = quadraticFunction.gradient(x);
+                gradient = quadrFunction.gradient(x);
                 length = VectorHelper.length(gradient);
 
             } else {

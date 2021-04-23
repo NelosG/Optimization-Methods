@@ -1,17 +1,12 @@
 package secondLab;
 
-import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class ConjugateGradient extends AbstractSolver {
 
-    public ConjugateGradient(QuadraticFunction quadraticFunction, double epsilon) {
-        super(quadraticFunction, epsilon);
+    public ConjugateGradient(QuadrFunction quadrFunction, double epsilon) {
+        super(quadrFunction, epsilon);
     }
 
     @Override
@@ -19,7 +14,7 @@ public class ConjugateGradient extends AbstractSolver {
         RealVector vectorP = gradient.mapMultiply(-1);
         while (length >= epsilon) {
             ++iterations;
-            RealVector ap = MatrixHelper.mul(quadraticFunction.getA(),(vectorP));
+            RealVector ap = quadrFunction.mulAtoVec(vectorP);
             alpha = length / ap.dotProduct(vectorP);
             RealVector nextX = x.add(vectorP.mapMultiply(alpha));
             RealVector nextGradient = gradient.add(ap.mapMultiply(alpha));
@@ -35,6 +30,6 @@ public class ConjugateGradient extends AbstractSolver {
             length = nextGradientLength;
             x = nextX;
         }
-        return new Pair(x, quadraticFunction.apply(x));
+        return new Pair(x, quadrFunction.apply(x));
     }
 }

@@ -1,24 +1,25 @@
 package secondLab;
 
 
-import firstLab.*;
+import firstLab.Optimizer;
 import org.apache.commons.math3.linear.MatrixUtils;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.RealVector;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 
 public class Main {
-    static double eps = 1e-6;
+    static double eps = 1E-7;
+    static QuadrFunction func = new QuadraticFunction(
+            MatrixUtils.createRealMatrix(new double[][]{{2, 2}, {2, 4}}),
+            MatrixUtils.createRealVector(new double[]{2, 4}),
+            3);
+
     public static void main(String[] args) {
 
-        RealMatrix a = MatrixUtils.createRealMatrix(new double[][]{{2, 2}, {2, 4}});
-        RealVector b = MatrixUtils.createRealVector(new double[]{2, 4});
-        double c = 3;
 
         System.out.println("GradientDescent\n");
-        GradientDescent gradientDescent = new GradientDescent(new QuadraticFunction(a, b, c), eps);
+        GradientDescent gradientDescent = new GradientDescent(func, eps);
         Pair answer = gradientDescent.findMin();
         Arrays.stream(answer.getValue().toArray()).forEach(s -> System.out.print(s + " "));
         System.out.println("\n" + answer.getFuncValue());
@@ -26,26 +27,27 @@ public class Main {
 
 
         System.out.println("ConjugateGradient\n");
-        ConjugateGradient conjGrad = new ConjugateGradient(new QuadraticFunction(a, b, c), eps);
+        ConjugateGradient conjGrad = new ConjugateGradient(func, eps);
         answer = conjGrad.findMin();
         Arrays.stream(answer.getValue().toArray()).forEach(s -> System.out.print(s + " "));
         System.out.println("\n" + answer.getFuncValue());
         System.out.println("Iterations: " + conjGrad.resetIterations() + "\n-------------------------\n");
 
 
-        runSteepestDescent("firstLab.Dichotomy", a, b, c);
-//        runSteepestDescent("firstLab.Fibonacci", a, b, c);
-        runSteepestDescent("firstLab.GoldenSection", a, b, c);
-        runSteepestDescent("firstLab.Parabolas", a, b, c);
-        runSteepestDescent("firstLab.Brent", a, b, c);
+        runSteepestDescent("firstLab.Dichotomy");
+        runSteepestDescent("firstLab.Fibonacci");
+        runSteepestDescent("firstLab.GoldenSection");
+        runSteepestDescent("firstLab.Parabolas");
+        runSteepestDescent("firstLab.Brent");
     }
 
-    static void runSteepestDescent(String name, RealMatrix a, RealVector b, double c) {
+    static void runSteepestDescent(String name) {
         System.out.println(name + "\n");
         SteepestDescent steepestDescent;
         try {
-            steepestDescent = new SteepestDescent(new QuadraticFunction(a, b, c), eps, (Optimizer) Class.forName(name).newInstance());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ignored) {
+            steepestDescent = new SteepestDescent(func, eps, (Optimizer) Class.forName(name).getDeclaredConstructor().newInstance());
+        } catch (ClassNotFoundException | InstantiationException |
+                IllegalAccessException | NoSuchMethodException | InvocationTargetException ignored) {
             System.err.println("((");
             return;
         }

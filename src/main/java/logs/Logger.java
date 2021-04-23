@@ -5,11 +5,13 @@ import org.apache.poi.ss.usermodel.*;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class Logger {
 
     public static Workbook book = new HSSFWorkbook();
-    public static String outPutFile = ".\\Log.xls";
+    public static Path outPutFile = Path.of("./Log.xls");
     private Sheet sheet;
     private int rowN;
     private int cell;
@@ -21,7 +23,7 @@ public class Logger {
 
     }
     public Logger(String out) {
-        outPutFile = out;
+        outPutFile = Path.of(out);
     }
 
     public void addOrGetSheet(String sh, boolean addInSheetIfItExist) {
@@ -44,21 +46,31 @@ public class Logger {
         writeInFile(outPutFile);
     }
 
-    public void writeInFile(String out) throws IOException {
+    public void writeInFile(Path out) throws IOException {
         for (int i = 0; i < maxCell; i++) {
             sheet.autoSizeColumn(i);
         }
-        book.write(new FileOutputStream(out));
+        book.write(Files.newOutputStream(out));
         changed = false;
     }
 
-    public void reset() throws IOException {
+    public void reset(){
         reset(false);
     }
 
-    public void reset(boolean write) throws IOException {
-        if(changed && write)writeInFile();
-        book.close();
+    public void reset(boolean write){
+        if(changed && write){
+            try {
+                writeInFile();
+            } catch (IOException ignored) {
+
+            }
+        }
+        try {
+            book.close();
+        } catch (IOException ignored) {
+
+        }
         book = new HSSFWorkbook();
         rowN = 0;
         cell = 0;

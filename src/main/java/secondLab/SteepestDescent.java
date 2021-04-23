@@ -9,8 +9,8 @@ public class SteepestDescent extends AbstractSolver {
     Optimizer optimizer;
 
 
-    public SteepestDescent(QuadraticFunction quadraticFunction, double epsilon,  Optimizer opt) {
-        super(quadraticFunction, epsilon);
+    public SteepestDescent(QuadrFunction quadrFunction, double epsilon, Optimizer opt) {
+        super(quadrFunction, epsilon);
         optimizer = opt;
     }
 
@@ -20,15 +20,19 @@ public class SteepestDescent extends AbstractSolver {
             ++iterations;
             nextIter(x, gradient);
             x = x.add(gradient.mapMultiply(-alpha));
-            gradient = quadraticFunction.gradient(x);
+            gradient = quadrFunction.gradient(x);
             length = VectorHelper.length(gradient);
+            if(iterations > 100_000) {
+                ++iterations;
+                break;
+            }
         }
-        return new Pair(x, quadraticFunction.apply(x));
+        return new Pair(x, quadrFunction.apply(x));
     }
 
     private void nextIter(RealVector x, RealVector gradient) {
-        Function<Double, Double> functionAlpha = a -> quadraticFunction.apply(x.copy().add(gradient.mapMultiply(-a)));
-        alpha = optimizer.optimize(0, MatrixHelper.getMaxEigenValue(quadraticFunction.getA()), epsilon, functionAlpha);
+        Function<Double, Double> functionAlpha = a -> quadrFunction.apply(x.add(gradient.mapMultiply(-a)));
+        alpha = optimizer.optimize(quadrFunction.lBound(), quadrFunction.rBound(), epsilon, functionAlpha);
         allIterations += optimizer.resetIterations();
     }
 }

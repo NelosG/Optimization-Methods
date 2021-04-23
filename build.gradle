@@ -20,6 +20,10 @@ dependencies {
     testImplementation 'org.javatuples:javatuples:1.2'
 }
 
+tasks.withType(JavaExec) {
+    jvmArgs = ['-Xmx10g']
+}
+
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 

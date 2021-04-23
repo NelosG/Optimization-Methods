@@ -98,7 +98,7 @@ public class Runner {
             optimizer.forLog("Actual:", resultX, resultY);
             optimizer.forLog("Difference:", Math.abs(task.expectedX - resultX), Math.abs(task.expectedY - resultY));
             try {
-                optimizer.log.writeInFile("." + File.separator + "Logs" + task.taskName + File.separator + eps + "Log.xls");
+                optimizer.log.writeInFile(Path.of("." + "/" + "Logs" + task.taskName + "/" + eps + "Log.xls"));
             } catch (IOException e) {
                 System.err.println("Can't write log");
             }
