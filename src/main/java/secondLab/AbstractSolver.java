@@ -5,7 +5,7 @@ import org.apache.commons.math3.linear.RealVector;
 
 
 public abstract class AbstractSolver {
-    protected double epsilon, alpha = 10;
+    protected double epsilon, alpha = 100;
     protected long iterations, allIterations;
     protected QuadrFunction quadrFunction;
 
