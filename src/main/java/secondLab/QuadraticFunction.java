@@ -1,6 +1,5 @@
 package secondLab;
 
-import java.util.List;
 import java.util.function.Function;
 
 public class QuadraticFunction implements Function<Vector, Double> {

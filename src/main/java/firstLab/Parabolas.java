@@ -28,10 +28,11 @@ public class Parabolas extends Optimizer {
             fx = func.apply(x);
         }
         double u;
-        int k = 1;
+        iterations = 0;
         forLog("iter N", "u", "x", "l", "r", "abs(l-r)", "prev/now");
         double prev = 0;
         while ((r - l)/2 > eps) {
+            iterations++;
             double numerator =Math.pow(x - l, 2) * (fx - fr) -Math.pow(x - r, 2) * (fx - fl);
             double denominator = (2 * ((x - l) * (fx - fr) - (x - r) * (fx - fl)));
             //to protect from NaN
@@ -58,11 +59,10 @@ public class Parabolas extends Optimizer {
                 x = u;
                 fx = fu;
             }
-            forLog(k, u, x, l, r, Math.abs(l-r), prev/Math.abs(l-r));
+            forLog(iterations, u, x, l, r, Math.abs(l-r), prev/Math.abs(l-r));
             // x - ??? ???/ u ??? ????????/ l ? r - ???????
             toMass(x, fx, u, fu,l, fl,  r, fr);
             prev = Math.abs(l-r);
-            k++;
         }
         return (l + r) / 2;
     }

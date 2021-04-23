@@ -33,16 +33,16 @@ public class Main {
         GradientDescent gradientDescent = new GradientDescent(new QuadraticFunction(a, b, c), eps);
         Pair answer = gradientDescent.findMin();
         answer.getValue().getCoefficients().forEach(s -> System.out.print(s + " "));
-        System.out.println("\n" + answer.getFuncValue() + "\n");
-        iter.add(gradientDescent.resetIterations());
+        System.out.println("\n" + answer.getFuncValue());
+        System.out.println("Iterations: " + gradientDescent.resetIterations() + "\n");
 
 
         System.out.println("ConjugateGradient\n");
         ConjugateGradient conjGrad = new ConjugateGradient(new QuadraticFunction(a, b, c), eps);
         answer = conjGrad.findMin();
         answer.getValue().getCoefficients().forEach(s -> System.out.print(s + " "));
-        System.out.println("\n" + answer.getFuncValue() + "\n");
-        iter.add(conjGrad.resetIterations());
+        System.out.println("\n" + answer.getFuncValue());
+        System.out.println("Iterations: " + conjGrad.resetIterations() + "\n");
 
 
         runSteepestDescent("firstLab.Dichotomy", a, b, c);
@@ -50,9 +50,6 @@ public class Main {
         runSteepestDescent("firstLab.GoldenSection", a, b, c);
         runSteepestDescent("firstLab.Parabolas", a, b, c);
         runSteepestDescent("firstLab.Brent", a, b, c);
-        System.out.println("\n\n!!_-_-_-_-_-_-_-_-_-_-_-_-!!\n\n");
-
-        iter.forEach(System.out::println);
     }
 
     static void runSteepestDescent(String name, Matrix a, Vector b, double c) {
@@ -66,7 +63,7 @@ public class Main {
         }
         Pair answer = steepestDescent.findMin();
         answer.getValue().getCoefficients().forEach(s -> System.out.print(s + " "));
-        System.out.println("\n" + answer.getFuncValue() + "\n");
-        iter.add(steepestDescent.resetIterations());
+        System.out.println("\n" + answer.getFuncValue());
+        System.out.println("Iterations: " + steepestDescent.getIterations() + " || All Iterations: " + steepestDescent.resetIterations() + "\n");
     }
 }

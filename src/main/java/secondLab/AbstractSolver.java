@@ -3,9 +3,9 @@ package secondLab;
 import java.util.Collections;
 
 public abstract class AbstractSolver {
-    double epsilon, alpha;
-    long iterations;
-    QuadraticFunction quadraticFunction;
+    protected double epsilon, alpha;
+    protected long iterations, allIterations;
+    protected QuadraticFunction quadraticFunction;
 
     public AbstractSolver(QuadraticFunction quadraticFunction, double epsilon) {
         this.epsilon = epsilon;
@@ -21,16 +21,23 @@ public abstract class AbstractSolver {
         if (length < epsilon) {
             return new Pair(x, xFunc);
         }
-        return calcMin(x, xFunc, gradient, length);
+        Pair forRet = calcMin(x, xFunc, gradient, length);
+        allIterations += iterations;
+        return forRet;
     }
 
     public long getIterations() {
         return iterations;
     }
 
+    public long getAllIterations() {
+        return allIterations;
+    }
+
     public long resetIterations() {
-        long temp = iterations;
+        long temp = allIterations;
         iterations = 0;
+        allIterations = 0;
         return temp;
     }
 

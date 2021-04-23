@@ -10,8 +10,12 @@ import java.util.stream.Collectors;
 public abstract class Optimizer {
     public Logger log;
     public boolean toLog;
+    public boolean generateMass = false;
+    public long iterations = 0;
 
-    public ArrayList<ArrayList<Pair<Double>>> array = new ArrayList<>();
+
+
+    public ArrayList<ArrayList<Pair<Double>>> array = null;
 
     public Optimizer() {
         this(null);
@@ -33,22 +37,32 @@ public abstract class Optimizer {
     }
 
     public void toMass(Number... o) {
-        ArrayList<Pair<Double>> temp = new ArrayList<>();
-        int k = 0;
-        Pair<Double> p = new Pair<>(0.,0.);
-        for(Object s : o) {
-            if(k % 2 == 1) {
-                p.second = toDouble(s);
-                temp.add(p);
-                p =new Pair<>(0.,0.);
-            } else {
-                p.first = toDouble(s);
+        if(generateMass) {
+            ArrayList<Pair<Double>> temp = new ArrayList<>();
+            int k = 0;
+            Pair<Double> p = new Pair<>(0.,0.);
+            for(Object s : o) {
+                if(k % 2 == 1) {
+                    p.second = toDouble(s);
+                    temp.add(p);
+                    p =new Pair<>(0.,0.);
+                } else {
+                    p.first = toDouble(s);
+                }
+                k++;
             }
-            k++;
+            if (!temp.isEmpty())
+                array.add(temp);
         }
-        if (!temp.isEmpty())
-            array.add(temp);
     }
+
+    public void setGenerateMass(boolean flag){
+        generateMass = flag;
+        if(array == null) {
+            array = new ArrayList<>();
+        }
+    }
+
     static Double toDouble(Object s) {
         if(s instanceof Integer)
             return (Double)(double)(int) s;
@@ -63,6 +77,16 @@ public abstract class Optimizer {
             this.first = a;
             this.second = b;
         }
+    }
+
+    public long getIterations() {
+        return iterations;
+    }
+
+    public long resetIterations() {
+        long temp = iterations;
+        iterations = 0;
+        return temp;
     }
 }
 

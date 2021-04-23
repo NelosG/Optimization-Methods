@@ -25,8 +25,9 @@ public class GoldenSection extends Optimizer {
         double fX2 = func.apply(x2);
         forLog("iter N","x1", "x2", "fX1", "fX2", "a", "b", "length", "prev/now");
         double prev = 0;
-        int k = 1;
+        iterations = 0;
         while ((b - a) / 2 > eps) {
+            iterations++;
             if (fX1 - fX2 <= 0) {
                 b = x2;
                 x2 = x1;
@@ -40,10 +41,9 @@ public class GoldenSection extends Optimizer {
                 x2 = a + TAU * (b - a);
                 fX2 = func.apply(x2);
             }
-            forLog(k,x1, x2, fX1, fX2, a, b, Math.abs(a-b), prev/(Math.abs(a-b)));
+            forLog(iterations,x1, x2, fX1, fX2, a, b, Math.abs(a-b), prev/(Math.abs(a-b)));
             // x1 ? x2 ??? ? ??? ????? ????? ??? ????? ???/ a ? b ???????
             toMass(x1, fX1, x2, fX2, a, func.apply(a), b, func.apply(b));
-            k++;
             prev = Math.abs(a-b);
         }
         return (a + b) / 2;

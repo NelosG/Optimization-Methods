@@ -28,5 +28,6 @@ public class SteepestDescent extends AbstractSolver {
     private void nextIter(Vector x, Vector gradient) {
         Function<Double, Double> functionAlpha = a -> quadraticFunction.apply(x.sum(gradient.multiplyByScalar(-a)));
         alpha = optimizer.optimize(Integer.MIN_VALUE, Integer.MAX_VALUE, epsilon, functionAlpha);
+        allIterations += optimizer.resetIterations();
     }
 }

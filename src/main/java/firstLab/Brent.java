@@ -24,8 +24,9 @@ public class Brent extends Optimizer {
         double u = 0, fU;
         boolean parabolaU;
         forLog("iter N", "x", "w", "v", "u", "fX", "fW", "fV", "fU", "a", "c");
-        int k = 1;
+        iterations = 0;
         while (d > eps) {
+            iterations++;
             parabolaU = false;
             double g = e;
             e = d;
@@ -84,10 +85,9 @@ public class Brent extends Optimizer {
                     fV = fU;
                 }
             }
-            forLog(k, x, w, v, u, fX, fW, fV, fU, a, c);
+            forLog(iterations, x, w, v, u, fX, fW, fV, fU, a, c);
             // x - ??? ???/ u ??? ????????/ v ? w - ???????
             toMass(x,fX,  u, fU, w, fW, v, fV);
-            k++;
         }
         return x;
     }
