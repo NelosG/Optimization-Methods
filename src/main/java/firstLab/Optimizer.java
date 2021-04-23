@@ -1,5 +1,7 @@
 package firstLab;
 
+import logs.Logger;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Function;

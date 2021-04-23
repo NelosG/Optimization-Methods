@@ -1,5 +1,7 @@
 package firstLab;
 
+import logs.Logger;
+
 import java.util.Random;
 import java.util.function.Function;
 
@@ -25,7 +27,7 @@ public class Parabolas extends Optimizer {
             x = l + (r-l)*rand.nextDouble();
             fx = func.apply(x);
         }
-        double u = 1.0/0.0;
+        double u;
         int k = 1;
         forLog("iter N", "u", "x", "l", "r", "abs(l-r)", "prev/now");
         double prev = 0;
@@ -33,10 +35,8 @@ public class Parabolas extends Optimizer {
             double numerator =Math.pow(x - l, 2) * (fx - fr) -Math.pow(x - r, 2) * (fx - fl);
             double denominator = (2 * ((x - l) * (fx - fr) - (x - r) * (fx - fl)));
             //to protect from NaN
-            if(numerator == 0.0 && denominator == 0.0) {
-                if( x == u)
-                    break;
-                u = x;
+            if(numerator == 0.0 && denominator == 0.0 || Double.isNaN(numerator) || Double.isNaN(denominator)) {
+                break;
             } else u = x - numerator / denominator;
             double fu = func.apply(u);
             if (fu > fx) {

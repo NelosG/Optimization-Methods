@@ -1,5 +1,5 @@
-import firstLab.Logger;
-import firstLab.Optimizer;
+package firstLab;
+import logs.Logger;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,5 +1,6 @@
 package firstLab;
 
+import logs.Logger;
 import org.javatuples.Sextet;
 import org.junit.After;
 import org.junit.Assert;

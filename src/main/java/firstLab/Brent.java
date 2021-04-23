@@ -1,5 +1,7 @@
 package firstLab;
 
+import logs.Logger;
+
 import java.util.function.Function;
 
 public class Brent extends Optimizer {
