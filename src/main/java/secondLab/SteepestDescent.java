@@ -1,6 +1,7 @@
 package secondLab;
 
 import firstLab.Optimizer;
+import org.apache.commons.math3.linear.RealVector;
 
 import java.util.function.Function;
 
@@ -14,20 +15,20 @@ public class SteepestDescent extends AbstractSolver {
     }
 
     @Override
-    protected Pair calcMin(Vector x, double xFunc, Vector gradient, double length) {
+    protected Pair calcMin(RealVector x, double xFunc, RealVector gradient, double length) {
         while (length >= epsilon) {
             ++iterations;
             nextIter(x, gradient);
-            x = x.sum(gradient.multiplyByScalar(-alpha));
+            x = x.add(gradient.mapMultiply(-alpha));
             gradient = quadraticFunction.gradient(x);
-            length = gradient.length();
+            length = VectorHelper.length(gradient);
         }
         return new Pair(x, quadraticFunction.apply(x));
     }
 
-    private void nextIter(Vector x, Vector gradient) {
-        Function<Double, Double> functionAlpha = a -> quadraticFunction.apply(x.sum(gradient.multiplyByScalar(-a)));
-        alpha = optimizer.optimize(Integer.MIN_VALUE, Integer.MAX_VALUE, epsilon, functionAlpha);
+    private void nextIter(RealVector x, RealVector gradient) {
+        Function<Double, Double> functionAlpha = a -> quadraticFunction.apply(x.copy().add(gradient.mapMultiply(-a)));
+        alpha = optimizer.optimize(0, MatrixHelper.getMaxEigenValue(quadraticFunction.getA()), epsilon, functionAlpha);
         allIterations += optimizer.resetIterations();
     }
 }

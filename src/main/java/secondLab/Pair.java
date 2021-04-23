@@ -1,19 +1,21 @@
 package secondLab;
 
+import org.apache.commons.math3.linear.RealVector;
+
 public class Pair {
-    private Vector value;
+    private RealVector value;
     private double funcValue;
 
-    public Pair(Vector value, double funcValue) {
+    public Pair(RealVector value, double funcValue) {
         this.value = value;
         this.funcValue = funcValue;
     }
 
-    public Vector getValue() {
+    public RealVector getValue() {
         return value;
     }
 
-    public void setValue(Vector value) {
+    public void setValue(RealVector value) {
         this.value = value;
     }
 

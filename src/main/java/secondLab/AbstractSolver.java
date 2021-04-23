@@ -1,6 +1,8 @@
 package secondLab;
 
-import java.util.Collections;
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealVector;
+
 
 public abstract class AbstractSolver {
     protected double epsilon, alpha;
@@ -10,14 +12,14 @@ public abstract class AbstractSolver {
     public AbstractSolver(QuadraticFunction quadraticFunction, double epsilon) {
         this.epsilon = epsilon;
         this.quadraticFunction = quadraticFunction;
-        this.alpha = 100;
+        this.alpha = 10;
     }
 
     public Pair findMin() {
-        Vector x = new Vector(Collections.nCopies(quadraticFunction.getN(), 0.0));
+        RealVector x = new ArrayRealVector(quadraticFunction.getN());
         double xFunc = quadraticFunction.apply(x);
-        Vector gradient = quadraticFunction.gradient(x);
-        double length = gradient.length();
+        RealVector gradient = quadraticFunction.gradient(x);
+        double length = VectorHelper.length(gradient);
         if (length < epsilon) {
             return new Pair(x, xFunc);
         }
@@ -41,5 +43,5 @@ public abstract class AbstractSolver {
         return temp;
     }
 
-    protected abstract Pair calcMin(Vector x, double xFunc, Vector gradient, double length);
+    protected abstract Pair calcMin(RealVector x, double xFunc, RealVector gradient, double length);
 }
