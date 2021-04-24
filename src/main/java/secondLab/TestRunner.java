@@ -53,8 +53,8 @@ public class TestRunner {
     }
 
     public static void run(Function<QuadrFunction, AbstractSolver> constructor, String name) {
-        int[] K = {1, 10, 100, 500, 1000, 1500, 2000};
-        int[] N = {10, 100, 1000, 3000, 10000};
+        int[] K = {1, 10, 100, 200, 300, 500, 700, 1000};
+        int[] N = {10, 100, 500, 1000, 3000, 10000};
 
         logger.addOrGetSheet(name, false);
         logger.write("N\\K");
