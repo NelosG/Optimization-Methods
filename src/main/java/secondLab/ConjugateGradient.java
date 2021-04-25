@@ -11,24 +11,28 @@ public class ConjugateGradient extends AbstractSolver {
 
     @Override
     protected Pair calcMin(RealVector x, double xFunc, RealVector gradient, double length) {
-        RealVector vectorP = gradient.mapMultiply(-1);
-        while (length >= epsilon) {
+        iterations = 0;
+        double lambda, beta, newLength;
+        RealVector p, newX, g1, g;
+        g1 = quadrFunction.gradient(x);
+        p = g1.mapMultiply(-1);
+        while (length > epsilon) {
             ++iterations;
-            RealVector ap = quadrFunction.mulAtoVec(vectorP);
-            alpha = length / ap.dotProduct(vectorP);
-            RealVector nextX = x.add(vectorP.mapMultiply(alpha));
-            RealVector nextGradient = gradient.add(ap.mapMultiply(alpha));
-            double nextGradientLength = nextGradient.dotProduct(nextGradient);
-            double beta;
-            if (iterations % x.getDimension() == 0) {
-                beta = 0;
+            newX = x;
+            g = g1;
+            RealVector apk = quadrFunction.mulAToVec(p);
+            double f = apk.dotProduct(p);
+            length = g.dotProduct(g);
+            lambda = length / f;
+            x = newX.combine(1, lambda, p);
+            if (iterations % quadrFunction.n == 0) {
+                g1 = quadrFunction.gradient(x).mapMultiply(-1);
             } else {
-                beta = nextGradientLength / length;
+                g1 = g.combine(1, lambda, apk);
+                newLength = g1.dotProduct(g1);
+                beta = newLength/length;
+                p = quadrFunction.gradient(x).combine(-1, beta, p);
             }
-            vectorP = nextGradient.mapMultiply(-1).add(vectorP.mapMultiply(beta));
-            gradient = nextGradient;
-            length = nextGradientLength;
-            x = nextX;
         }
         return new Pair(x, quadrFunction.apply(x));
     }

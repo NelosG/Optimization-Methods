@@ -17,7 +17,7 @@ public abstract class QuadrFunction implements Function<RealVector, Double> {
         return n;
     }
 
-    public abstract RealVector mulAtoVec(RealVector vector);
+    public abstract RealVector mulAToVec(RealVector vector);
 
     public abstract double rBound();
 

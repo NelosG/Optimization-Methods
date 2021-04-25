@@ -14,7 +14,7 @@ public class DiagonalQuadraticFunction extends QuadrFunction {
     }
 
     @Override
-    public RealVector mulAtoVec(RealVector vector) {
+    public RealVector mulAToVec(RealVector vector) {
         return mul(a, (vector));
     }
 
