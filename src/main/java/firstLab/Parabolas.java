@@ -33,12 +33,10 @@ public class Parabolas extends Optimizer {
         double prev = 0;
         while ((r - l)/2 > eps) {
             iterations++;
-            double numerator =Math.pow(x - l, 2) * (fx - fr) -Math.pow(x - r, 2) * (fx - fl);
-            double denominator = (2 * ((x - l) * (fx - fr) - (x - r) * (fx - fl)));
-            //to protect from NaN
-            if(numerator == 0.0 && denominator == 0.0 || Double.isNaN(numerator) || Double.isNaN(denominator)) {
+            u = x - (Math.pow(x - l, 2) * (fx - fr) -Math.pow(x - r, 2) * (fx - fl)) / (2 * ((x - l) * (fx - fr) - (x - r) * (fx - fl)));
+            if(Double.isNaN(u)) {
                 break;
-            } else u = x - numerator / denominator;
+            }
             double fu = func.apply(u);
             if (fu > fx) {
                 if (u > x) {

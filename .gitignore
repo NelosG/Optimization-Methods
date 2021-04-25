@@ -1,5 +1,6 @@
 /.idea/
 /build/
+/.gradle/
 *.xls
 .DS_Store
 gradlew*

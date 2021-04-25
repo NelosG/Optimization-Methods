@@ -5,18 +5,26 @@ import logs.Logger;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealVector;
 
-
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
 public class TestRunner {
-    static double eps = 1E-3;
+    static double eps = 1E-4;
     static Random rand = new Random();
 
-    static Logger logger = new Logger("./table.xls");
+    static Logger logger = new Logger("Table.xls");
+
+    static ArrayList<ArrayList<DiagonalQuadraticFunction>> array = new ArrayList<>();
+
+    static int[] K = {1, 10, 100, 200, 300, 500, 700, 1000};
+    static int[] N = {10, 100, 500, 1000, 3000, 5000, 10000};
 
     public static void main(String[] args) {
+        init();
+
         run(s -> new GradientDescent(s, eps), "GradientDescent");
 
         run(s -> new ConjugateGradient(s, eps), "ConjugateGradient");
@@ -27,10 +35,19 @@ public class TestRunner {
         run(s -> new SteepestDescent(s, eps, new Fibonacci()), "SteepestDescent_Fibonacci");
 
         run(s -> new SteepestDescent(s, eps, new GoldenSection()), "SteepestDescent_GoldenSection");
-//
+
 //        run(s -> new SteepestDescent(s, eps, new Parabolas()), "SteepestDescent_Parabolas");
-//
+
         run(s -> new SteepestDescent(s, eps, new Brent()), "SteepestDescent_Brent");
+    }
+
+    public static void init() {
+        for (int i = 0; i < N.length; ++i) {
+            array.add(new ArrayList<>());
+            for (int k : K) {
+                array.get(i).add(new DiagonalQuadraticFunction(generate(N[i], k), generate(N[i]), rand.nextDouble()));
+            }
+        }
     }
 
     public static RealVector generate(int n) {
@@ -53,31 +70,34 @@ public class TestRunner {
     }
 
     public static void run(Function<QuadrFunction, AbstractSolver> constructor, String name) {
-        int[] K = {1, 10, 100, 200, 300, 500, 700, 1000};
-        int[] N = {10, 100, 500, 1000, 3000, 10000};
-
+        System.out.println(name);
         logger.addOrGetSheet(name, false);
         logger.write("N\\K");
         for (int k : K) {
             logger.write(k);
-            if(k == 10) {
-                k = 0;
-            }
         }
         logger.nextLine();
-        for (int n : N) {
-            System.out.println(name + " : " + n);
+        List<AbstractSolver> solvers = new ArrayList<>();
+        for (int i = 0; i < N.length; ++i) {
+            for (int j = 0; j < K.length; ++j) {
+                solvers.add(constructor.apply(array.get(i).get(j)));
+            }
+        }
+
+        solvers.parallelStream().forEach(AbstractSolver::findMin);
+
+
+        for (int i = 0; i < N.length; ++i) {
+            int n = N[i];
             logger.write(n);
-            for (int k : K) {
-                AbstractSolver solver = constructor.apply(new DiagonalQuadraticFunction(generate(n, k), generate(n), rand.nextDouble()));
-                solver.findMin();
+            for (int j = 0; j < K.length; ++j) {
+                AbstractSolver solver = solvers.get(i * K.length + j);
                 long iter = solver.getIterations();
-                if(iter > 100_000) {
+                if (iter > 100_000) {
                     logger.write("!>100_000");
                 } else {
                     logger.write(iter);
                 }
-                solver.resetIterations();
             }
             logger.nextLine();
         }
@@ -85,5 +105,6 @@ public class TestRunner {
             logger.writeInFile();
         } catch (IOException ignored) {
         }
+        System.out.println("Done\n");
     }
 }

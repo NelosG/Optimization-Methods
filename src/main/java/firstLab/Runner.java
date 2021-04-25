@@ -74,14 +74,11 @@ public class Runner {
     }
 
     private void runOne(Task task, String name, Double eps) {
-        Optimizer optimizer = null;
+        Optimizer optimizer;
         try {
             optimizer = (Optimizer) Class.forName("firstLab." + name).getDeclaredConstructor(Logger.class).newInstance(toLog ? new Logger() : null);
-        } catch (final ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (final Exception e) {
-            System.err.println("Can't create optimizer");
-            e.printStackTrace();
+            throw new RuntimeException("Can't create optimizer");
         }
 
 
