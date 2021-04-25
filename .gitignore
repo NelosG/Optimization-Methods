@@ -3,4 +3,3 @@
 /.gradle/
 *.xls
 .DS_Store
-gradlew*
