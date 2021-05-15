@@ -30,21 +30,21 @@ public class TestRunner {
     public static void main(String[] args) {
         init();
 
-        run(s -> new GradientDescent(s, eps), "GradientDescent", 0);
+//        run(s -> new GradientDescent(s, eps), "GradientDescent", 0);
+//
+//        run(s -> new ConjugateGradient(s, eps), "ConjugateGradient", 1);
 
-        run(s -> new ConjugateGradient(s, eps), "ConjugateGradient", 1);
 
+        run(s -> new SteepestDescent(s, eps, new Dichotomy()), "SteepestDescent_Dichotomy", 0);
 
-        run(s -> new SteepestDescent(s, eps, new Dichotomy()), "SteepestDescent_Dichotomy", 2);
+        run(s -> new SteepestDescent(s, eps, new Fibonacci()), "SteepestDescent_Fibonacci", 1);
 
-        run(s -> new SteepestDescent(s, eps, new Fibonacci()), "SteepestDescent_Fibonacci", 3);
+        run(s -> new SteepestDescent(s, eps, new GoldenSection()), "SteepestDescent_GoldenSection", 2);
 
-        run(s -> new SteepestDescent(s, eps, new GoldenSection()), "SteepestDescent_GoldenSection", 4);
-
-//        run(s -> new SteepestDescent(s, eps, new Parabolas()), "SteepestDescent_Parabolas");
-
-        run(s -> new SteepestDescent(s, eps, new Brent()), "SteepestDescent_Brent", 5);
-        printAnswers();
+//        run(s -> new SteepestDescent(s, eps, new Parabolas()), "SteepestDescent_Parabolas", 0);
+//
+        run(s -> new SteepestDescent(s, eps, new Brent()), "SteepestDescent_Brent", 3);
+//        printAnswers();
     }
 
     public static void init() {
@@ -73,15 +73,15 @@ public class TestRunner {
                 for (Double d : answers.get(i).get(j)) {
                     logger.write(d);
                     aw += d;
-                    if(d > max) {
+                    if (d > max) {
                         max = d;
                     }
-                    if(d < min){
+                    if (d < min) {
                         min = d;
                     }
                 }
                 logger.writeln(aw / answers.get(i).get(j).size(), max - min);
-                if(max - min > 2 * eps) {
+                if (max - min > 2 * eps) {
                     System.err.println("Grustna  " + (max - min));
                 }
             }
@@ -147,12 +147,8 @@ public class TestRunner {
             logger.write(n);
             for (int j = 0; j < K.length; ++j) {
                 AbstractSolver solver = solvers.get(i * K.length + j);
-                long iter = solver.getIterations();
-                if (iter > 100_000) {
-                    logger.write("!>100_000");
-                } else {
-                    logger.write(iter);
-                }
+                long iter = solver.getAllIterations();
+                logger.write(iter);
             }
             logger.nextLine();
         }

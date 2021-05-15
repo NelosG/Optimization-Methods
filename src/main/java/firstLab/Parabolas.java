@@ -34,7 +34,7 @@ public class Parabolas extends Optimizer {
         while ((r - l)/2 > eps) {
             iterations++;
             u = x - (Math.pow(x - l, 2) * (fx - fr) -Math.pow(x - r, 2) * (fx - fl)) / (2 * ((x - l) * (fx - fr) - (x - r) * (fx - fl)));
-            if(Double.isNaN(u)) {
+            if(Double.isNaN(u) || iterations > 100_000) {
                 break;
             }
             double fu = func.apply(u);
