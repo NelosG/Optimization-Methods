@@ -1,5 +1,8 @@
-/.idea/
+*.idea*
 /build/
 /.gradle/
 *.xls
 .DS_Store
+*build-*
+*OpenXLSX*
+*tests-files*
