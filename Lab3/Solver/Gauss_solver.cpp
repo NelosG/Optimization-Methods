@@ -40,7 +40,7 @@ bool madeTriangularView(regular_matrix &mt, std::vector<double> &vec, int row, i
             for (int j = 0; j < mt.size(); j++) {
                 mt.set(i, j, 0.0);
             }
-            vec[i] =  0.0;
+            vec[i] = 0.0;
         }
     }
     return false;
@@ -84,17 +84,17 @@ std::pair<int, std::pair<std::vector<double>, int>> Solver::Gauss_solve(regular_
                 return {0, {answer, iter}};
     }
     for (int row = 0; row < mt.size(); row++)
-        if (checkIncompatibleLine(mt,vec, row))
+        if (checkIncompatibleLine(mt, vec, row))
             return {0, {answer, iter}};
     for (int row = 0; row < mt.size(); row++) {
         if (checkManySolution(mt, row))
             return {2, {answer, iter}};
     }
-    for (int row = (int)mt.size() - 1; row > 0; row--) {
+    for (int row = (int) mt.size() - 1; row > 0; row--) {
         madeDiagView(mt, vec, row);
         ++iter;
     }
-    for(int column = 0; column < mt.size(); ++column) {
+    for (int column = 0; column < mt.size(); ++column) {
         answer[column] = vec[column] / mt.get(column, column);
     }
     return {1, {answer, iter}};

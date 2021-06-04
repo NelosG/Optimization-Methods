@@ -1,8 +1,8 @@
 //
 // Created by NelosG.
 //
-#include <matrix_generator.h>
 #include <ctime>
+#include <matrix_generator.h>
 #include <random>
 
 double get_row_sum1(const std::vector<double> &row) {
@@ -13,7 +13,7 @@ double get_row_sum1(const std::vector<double> &row) {
     return res;
 }
 
-std::pair<sparse_matrix, std::vector<double>> matrix_generator::generate_sparse(int n, int k){
+std::pair<sparse_matrix, std::vector<double>> matrix_generator::generate_sparse(int n, int k) {
     std::vector<std::vector<double>> res(n, std::vector<double>(n, 0));
     std::string s = std::to_string(time(nullptr));
     std::seed_seq seed1(s.begin(), s.end());

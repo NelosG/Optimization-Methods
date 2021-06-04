@@ -10,22 +10,22 @@ std::vector<double> subtractVectors(std::vector<double> a, const std::vector<dou
     return a;
 }
 
-double scalar(const std::vector<double>& a, const std::vector<double>& b) {
+double scalar(const std::vector<double> &a, const std::vector<double> &b) {
     double res = 0;
     for (int i = 0; i < a.size(); ++i) {
-        res += a[i]*b[i];
+        res += a[i] * b[i];
     }
     return res;
 }
 
 std::vector<double> multiply(double alpha, std::vector<double> b) {
-    for (double & i : b) {
+    for (double &i : b) {
         i *= alpha;
     }
     return b;
 }
 
-std::vector<double> sumVectors(std::vector<double> a, const std::vector<double>& b) {
+std::vector<double> sumVectors(std::vector<double> a, const std::vector<double> &b) {
     for (int i = 0; i < a.size(); ++i) {
         a[i] += b[i];
     }

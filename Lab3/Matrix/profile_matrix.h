@@ -18,7 +18,7 @@ public:
 
     explicit profile_matrix(const matrix &mt);
 
-    explicit profile_matrix(const std::vector<std::vector<double>>& mt)
+    explicit profile_matrix(const std::vector<std::vector<double>> &mt)
         : profile_matrix(regular_matrix(mt)) {
     }
 

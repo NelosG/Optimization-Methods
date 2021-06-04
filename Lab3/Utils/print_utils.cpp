@@ -15,7 +15,7 @@ namespace print_utils {
         for (int i = 0; i < mt.size() - 1; ++i) {
             ss << print(mt.get(i), precision) << '\n';
         }
-        ss << print(mt.get((int)mt.size() - 1), precision);
+        ss << print(mt.get((int) mt.size() - 1), precision);
         return ss.str();
     }
 
@@ -44,20 +44,20 @@ namespace print_utils {
     }
 
     std::string print(const std::vector<int> &vec, int precision) {
-        return print(vec,precision, false);
+        return print(vec, precision, false);
     }
     std::string print(const std::vector<double> &vec, int precision) {
-        return print(vec,precision, false);
+        return print(vec, precision, false);
     }
 
     std::string print(const std::vector<double> &vec, int precision, bool print_size) {
         std::stringstream ss;
         ss << std::fixed;
         ss << std::setprecision(precision);
-        if(print_size) {
+        if (print_size) {
             ss << vec.size() << " ";
         }
-        if(vec.empty()) {
+        if (vec.empty()) {
             return ss.str();
         }
         for (int i = 0; i < vec.size() - 1; ++i) {
@@ -71,10 +71,10 @@ namespace print_utils {
         std::stringstream ss;
         ss << std::fixed;
         ss << std::setprecision(precision);
-        if(print_size) {
+        if (print_size) {
             ss << vec.size() << " ";
         }
-        if(vec.empty()) {
+        if (vec.empty()) {
             return ss.str();
         }
         for (int i = 0; i < vec.size() - 1; ++i) {

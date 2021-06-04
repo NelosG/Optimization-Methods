@@ -47,9 +47,9 @@ sparse_matrix::sparse_matrix(const matrix &mt) {
         ja[i] = jaList[i];
     }
 }
-int find(std::vector<int>& vec, int value) {
+int find(std::vector<int> &vec, int value) {
     for (int i = 0; i < vec.size(); ++i) {
-        if(vec[i] == value) {
+        if (vec[i] == value) {
             return i + 1;
         }
     }

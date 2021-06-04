@@ -26,7 +26,7 @@ std::pair<regular_matrix, std::vector<double>> runner::test_read_regular(const s
 void run_test_regular(const std::pair<regular_matrix, std::vector<double>> &p, int n, int k,
                       logger &lg) {
     lg << n;
-    if(k >= 0) {
+    if (k >= 0) {
         lg << k;
     }
     auto gaus = Solver::Gauss_solve(p.first, p.second);
@@ -45,11 +45,11 @@ void run_test_regular(const std::pair<regular_matrix, std::vector<double>> &p, i
 }
 
 void runner::run_all_tests_regular(const std::string &path, const std::string &name,
-                                   const std::vector<std::pair<int,std::vector<int>>>& NK, logger &lg) {
+                                   const std::vector<std::pair<int, std::vector<int>>> &NK, logger &lg) {
     std::string cur_path = path + "/" + name;
-    for(auto& [n, vecK] : NK) {
-        if(!vecK.empty()) {
-            for(auto& k : vecK) {
+    for (auto &[n, vecK] : NK) {
+        if (!vecK.empty()) {
+            for (auto &k : vecK) {
                 run_test_regular(test_read_regular(cur_path + std::to_string(n) + "_" + std::to_string(k) + ".txt"),
                                  n, k,
                                  lg);

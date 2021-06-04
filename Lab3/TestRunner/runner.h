@@ -28,8 +28,8 @@ namespace runner {
 
     std::pair<double, double> get_modules(const std::vector<double> &solve);
 
-    void read_vec(int n, std::fstream& str, std::vector<int>& res);
-    void read_vec(int n, std::fstream& str, std::vector<double>& res);
+    void read_vec(int n, std::fstream &str, std::vector<int> &res);
+    void read_vec(int n, std::fstream &str, std::vector<double> &res);
 
 }// namespace runner
 #endif//REGULAR_RUNNER_H

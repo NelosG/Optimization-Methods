@@ -24,18 +24,18 @@ void file_utils::to_end(std::fstream &fstr) {
     fstr.seekg(fstr.width() - 1);
 }
 
-bool file_utils::delete_file(const std::string &filename){
+bool file_utils::delete_file(const std::string &filename) {
     std::filesystem::path p(filename);
     p = proximate(p);
     return std::filesystem::remove(p);
 }
 
-bool file_utils::delete_file(const std::string &filename, int count_parent_dirs_for_delete){
+bool file_utils::delete_file(const std::string &filename, int count_parent_dirs_for_delete) {
     std::filesystem::path p(filename);
     p = proximate(p);
     std::filesystem::path prev("../");
-    for(int i = 0; i < count_parent_dirs_for_delete; ++i) {
-        if(p.parent_path().empty() || equivalent(p.parent_path(), prev)) {
+    for (int i = 0; i < count_parent_dirs_for_delete; ++i) {
+        if (p.parent_path().empty() || equivalent(p.parent_path(), prev)) {
             break;
         }
         p = p.parent_path();

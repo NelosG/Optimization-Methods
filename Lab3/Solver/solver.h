@@ -16,7 +16,7 @@ namespace Solver {
 
     std::pair<std::vector<double>, int> Conjugate_solve(const sparse_matrix &mt, const std::vector<double> &vec);
 
-}
+}// namespace Solver
 
 
 #endif//SOLVER_H

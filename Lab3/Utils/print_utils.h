@@ -9,7 +9,7 @@
 #include <sparse_matrix.h>
 #include <string>
 #include <vector>
-namespace print_utils{
+namespace print_utils {
     std::string print(const regular_matrix &mt, int precision);
 
     std::string print(const profile_matrix &mt, int precision);
@@ -35,7 +35,7 @@ namespace print_utils{
     std::string print(const sparse_matrix &vec);
 
     std::string print_diff(const std::vector<double> &solve);
-}
+}// namespace print_utils
 
 
 #endif//PRINT_UTILS_H

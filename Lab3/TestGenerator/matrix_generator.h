@@ -22,7 +22,7 @@ namespace matrix_generator {
     std::pair<regular_matrix, std::vector<double>> generate_Hilbert_regular(int n, int k);
     std::pair<profile_matrix, std::vector<double>> generate_Hilbert_profile(int n, int k);
 
-    std::vector<double> multiply_by_vector(const matrix& mt);
+    std::vector<double> multiply_by_vector(const matrix &mt);
 }// namespace matrix_generator
 
 namespace test_generator {

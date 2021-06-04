@@ -15,15 +15,15 @@ void test_generator::generate_tests(const std::string &path, const std::string &
     count = count == 1 ? count : count - 1;
     boost::asio::thread_pool pool(count);
 
-        for (auto &[n, vecK] : NK) {
-            if(!vecK.empty()) {
-                for (auto &k : vecK) {
-                    boost::asio::post(pool, [&path, &name, &test_creation, &n, &k]() { test_creation(path, name, n, k); });
-                }
-            } else {
-                boost::asio::post(pool, [&path, &name, &test_creation, &n]() { test_creation(path, name, n, -1); });
+    for (auto &[n, vecK] : NK) {
+        if (!vecK.empty()) {
+            for (auto &k : vecK) {
+                boost::asio::post(pool, [&path, &name, &test_creation, &n, &k]() { test_creation(path, name, n, k); });
             }
+        } else {
+            boost::asio::post(pool, [&path, &name, &test_creation, &n]() { test_creation(path, name, n, -1); });
         }
+    }
     pool.join();
 }
 
@@ -50,7 +50,7 @@ void create_profile(const std::string &path, const std::string &name, int n, int
 }
 
 void create_sparse(const std::string &path, const std::string &name, int n, int k,
-                    const std::function<std::pair<sparse_matrix, std::vector<double>>(int, int)> &gen_func) {
+                   const std::function<std::pair<sparse_matrix, std::vector<double>>(int, int)> &gen_func) {
     auto str = file_utils::open_file(path + "/" + name + std::to_string(n) + (k >= 0 ? ("_" + std::to_string(k)) : "") + ".txt", false);
     auto p = gen_func(n, k);
     int precision = 100;
@@ -80,10 +80,10 @@ void test_generator::test_creation_Hilbert_profile(const std::string &path, cons
     create_profile(path, name, n, k, matrix_generator::generate_Hilbert_profile);
 }
 
-std::vector<double> matrix_generator::multiply_by_vector(const matrix& mt) {
+std::vector<double> matrix_generator::multiply_by_vector(const matrix &mt) {
     std::vector<double> vector(mt.size(), 0);
     for (int i = 0; i < mt.size(); ++i) {
-        vector[i] = i+1;
+        vector[i] = i + 1;
     }
     std::vector<double> answer(mt.size());
     for (int row = 0; row < mt.size(); row++) {

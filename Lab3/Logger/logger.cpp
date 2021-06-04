@@ -2,20 +2,20 @@
 // Created by NelosG.
 //
 
-#include <logger.h>
 #include <OpenXLSX.hpp>
+#include <logger.h>
 
 using namespace OpenXLSX;
 
 logger::logger(const std::string &path) {
-    try{
+    try {
         doc.open(path);
-    } catch(...){
+    } catch (...) {
         doc.create(path);
     }
 }
 
-XLWorksheet get_sheet(const XLDocument& doc, const std::string& name){
+XLWorksheet get_sheet(const XLDocument &doc, const std::string &name) {
     XLSheet shet = doc.workbook().sheet(name);
     return XLWorksheet(shet.get_Data());
 }
@@ -23,7 +23,7 @@ XLWorksheet get_sheet(const XLDocument& doc, const std::string& name){
 
 bool logger::set_page(const std::string &name) {
     bool ret = false;
-    if(sheet_init && sheet.name() == name){
+    if (sheet_init && sheet.name() == name) {
         return ret;
     }
     if (!doc.workbook().worksheetExists(name)) {
@@ -49,7 +49,7 @@ void logger::set_heading(const std::vector<std::string> &heading) {
     row = 1;
     column = 1;
 
-    for (const auto & i : heading) {
+    for (const auto &i : heading) {
         write(i);
     }
 

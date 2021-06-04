@@ -35,7 +35,7 @@ public:
         return mt[i][j];
     }
 
-    [[nodiscard]] std::vector<double> get(int i) const{
+    [[nodiscard]] std::vector<double> get(int i) const {
         return mt[i];
     }
 

@@ -21,7 +21,7 @@ public:
 
     explicit sparse_matrix(const matrix &mt);
 
-    explicit sparse_matrix(const std::vector<std::vector<double>>& mt) : sparse_matrix(regular_matrix(mt)){}
+    explicit sparse_matrix(const std::vector<std::vector<double>> &mt) : sparse_matrix(regular_matrix(mt)) {}
 
     [[nodiscard]] double get(int a, int b) const override;
 
@@ -31,7 +31,6 @@ public:
     }
 
     void set(int a, int b, double value) override {
-
     }
 
     [[nodiscard]] std::vector<double> get_diagonal() const {
@@ -60,7 +59,7 @@ public:
 
 private:
     static int getRowProfileLen(const matrix &mt, int row, std::vector<double> &alList,
-                         std::vector<double> &auList, std::vector<int> &jaList);
+                                std::vector<double> &auList, std::vector<int> &jaList);
 };
 
 
