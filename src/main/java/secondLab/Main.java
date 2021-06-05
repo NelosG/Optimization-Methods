@@ -10,12 +10,12 @@ import java.util.Arrays;
 
 public class Main {
     static double eps = 1E-5;
-    static QuadrFunction func1 = new QuadraticFunction(
-            MatrixUtils.createRealMatrix(new double[][]{{2, 2}, {2, 4}}),
-            MatrixUtils.createRealVector(new double[]{2, 4}),
-            3);
-
     static QuadrFunction func = new QuadraticFunction(
+            MatrixUtils.createRealMatrix(new double[][]{{144, -120}, {-120, 1444}}),
+            MatrixUtils.createRealVector(new double[]{12, -30}),
+            25);
+
+    static QuadrFunction func1 = new QuadraticFunction(
             MatrixUtils.createRealMatrix(new double[][]{{144., -120.}, {-120., 144.}}),
             MatrixUtils.createRealVector(new double[]{12., -30.}),
             25.);

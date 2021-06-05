@@ -62,5 +62,6 @@ void runner::run_all_tests_profile(const std::string &path, const std::string &n
                              n, -1,
                              lg);
         }
+        lg.flush();
     }
 }

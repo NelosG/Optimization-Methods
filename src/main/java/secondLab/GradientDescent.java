@@ -9,7 +9,7 @@ public class GradientDescent extends AbstractSolver {
 
     @Override
     protected Pair calcMin(RealVector x, double xFunc, RealVector gradient, double length) {
-
+        iterations = 0;
         while (length >= epsilon) {
             ++iterations;
             RealVector y = x.add(gradient.mapMultiply(-alpha / length));

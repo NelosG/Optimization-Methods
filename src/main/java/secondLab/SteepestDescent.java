@@ -16,6 +16,7 @@ public class SteepestDescent extends AbstractSolver {
 
     @Override
     protected Pair calcMin(RealVector x, double xFunc, RealVector gradient, double length) {
+        iterations = 0;
         while (length >= epsilon) {
             ++iterations;
             nextIter(x, gradient);
@@ -33,6 +34,6 @@ public class SteepestDescent extends AbstractSolver {
     private void nextIter(RealVector x, RealVector gradient) {
         Function<Double, Double> functionAlpha = a -> quadrFunction.apply(x.add(gradient.mapMultiply(-a)));
         alpha = optimizer.optimize(quadrFunction.lBound(), quadrFunction.rBound(), epsilon, functionAlpha);
-        allIterations += optimizer.resetIterations();
+//        allIterations += optimizer.resetIterations();
     }
 }

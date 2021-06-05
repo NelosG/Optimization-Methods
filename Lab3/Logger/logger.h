@@ -29,6 +29,8 @@ public:
 
     void close();
 
+    void flush();
+
     template<typename T>
     logger &write(const T &s) {
         sheet.cell(XLCellReference(row, column++)).value() = s;

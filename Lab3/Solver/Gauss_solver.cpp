@@ -75,9 +75,9 @@ std::pair<int, std::pair<std::vector<double>, int>> Solver::Gauss_solve(regular_
     int iter = 0;
     for (int col = 0, row = 0; col < mt.size() && row < mt.size(); row++) {
         col = row;
-        ++iter;
         while (col < mt.size() && !pivoting(mt, row, col)) {
             col++;
+            ++iter;
         }
         if (col < mt.size())
             if (madeTriangularView(mt, vec, row, col))
@@ -92,7 +92,6 @@ std::pair<int, std::pair<std::vector<double>, int>> Solver::Gauss_solve(regular_
     }
     for (int row = (int) mt.size() - 1; row > 0; row--) {
         madeDiagView(mt, vec, row);
-        ++iter;
     }
     for (int column = 0; column < mt.size(); ++column) {
         answer[column] = vec[column] / mt.get(column, column);

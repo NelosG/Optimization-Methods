@@ -59,5 +59,6 @@ void runner::run_all_tests_regular(const std::string &path, const std::string &n
                              n, -1,
                              lg);
         }
+        lg.flush();
     }
 }

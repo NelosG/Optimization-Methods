@@ -64,5 +64,6 @@ void runner::run_all_tests_sparse(const std::string &path, const std::string &na
                             n, -1,
                             lg);
         }
+        lg.flush();
     }
 }

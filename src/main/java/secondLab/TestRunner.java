@@ -9,10 +9,7 @@ import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealVector;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Function;
 
 public class TestRunner {
@@ -23,31 +20,134 @@ public class TestRunner {
 
     static ArrayList<ArrayList<DiagonalQuadraticFunction>> array = new ArrayList<>();
     static ArrayList<ArrayList<ArrayList<Double>>> answers = new ArrayList<>();
+    static ArrayList<ArrayList<ArrayList<ArrayList<Long>>>> count = new ArrayList<>();
 
     static int[] K = {1, 10, 100, 200, 300, 500, 700, 1000, 2000};
     static int[] N = {10, 100, 500, 1000, 3000, 5000, 10000};
 
     public static void main(String[] args) {
-        init();
+        initCount();
+        int runCount = 5;
+        for (int i = 0; i < runCount; i++) {
+            init();
+            int j = 0;
+            run(s -> new GradientDescent(s, eps), "GradientDescent", j++, i);
 
-//        run(s -> new GradientDescent(s, eps), "GradientDescent", 0);
-//
-//        run(s -> new ConjugateGradient(s, eps), "ConjugateGradient", 1);
+            run(s -> new ConjugateGradient(s, eps), "ConjugateGradient", j++, i);
 
 
-        run(s -> new SteepestDescent(s, eps, new Dichotomy()), "SteepestDescent_Dichotomy", 0);
+            run(s -> new SteepestDescent(s, eps, new Dichotomy()), "SteepestDescent_Dichotomy", j++, i);
 
-        run(s -> new SteepestDescent(s, eps, new Fibonacci()), "SteepestDescent_Fibonacci", 1);
+            run(s -> new SteepestDescent(s, eps, new Fibonacci()), "SteepestDescent_Fibonacci", j++, i);
 
-        run(s -> new SteepestDescent(s, eps, new GoldenSection()), "SteepestDescent_GoldenSection", 2);
+            run(s -> new SteepestDescent(s, eps, new GoldenSection()), "SteepestDescent_GoldenSection", j++, i);
 
 //        run(s -> new SteepestDescent(s, eps, new Parabolas()), "SteepestDescent_Parabolas", 0);
 //
-        run(s -> new SteepestDescent(s, eps, new Brent()), "SteepestDescent_Brent", 3);
+            run(s -> new SteepestDescent(s, eps, new Brent()), "SteepestDescent_Brent", j++, i);
+        }
+
+        int j = 0;
+        print("GradientDescent", j++);
+
+        print("ConjugateGradient", j++);
+
+
+        print("SteepestDescent_Dichotomy", j++);
+
+        print("SteepestDescent_Fibonacci", j++);
+
+        print("SteepestDescent_GoldenSection", j++);
+
+//        run(s -> new SteepestDescent(s, eps, new Parabolas()), "SteepestDescent_Parabolas", 0);
+//
+        print("SteepestDescent_Brent", j++);
 //        printAnswers();
     }
 
+    private static void print(String name, int numb){
+        logger.addOrGetSheet(name, false);
+        logger.write("N\\K");
+        for (int k : K) {
+            logger.write(k);
+        }
+        logger.nextLine();
+        for (int i = 0; i < N.length; ++i) {
+            int n = N[i];
+            logger.write(n);
+            for (int j = 0; j < K.length; ++j) {
+                logger.write(find(count.get(numb).get(i).get(j)));
+            }
+            logger.nextLine();
+        }
+        try {
+            logger.writeInFile();
+        } catch (IOException ignored) {
+        }
+    }
+
+    private static Long find(ArrayList<Long> arr){
+        Set<Integer> set = new HashSet<>();
+
+        Collections.sort(arr, new Comparator<Long>() {
+            public int compare(Long o1, Long o2) {
+                return o2.compareTo(o1);
+            }
+        });
+        int c = arr.size();
+        Long sum = 0L;
+        Long sumAll = 0L;
+
+        System.out.println("--------------------------------");
+        for(Long l : arr) {
+            sum += l;
+            System.out.print(l + " ");
+        }
+        sumAll = sum;
+        System.out.println();
+        boolean flag = true;
+        while(flag) {
+            flag = false;
+            for(int i = 0; i < arr.size(); i++) {
+                if(!set.contains(i)) {
+                    boolean flag1 = false;
+                    for(int j = 0; j < arr.size(); j++) {
+                        if(!set.contains(j)) {
+                            if(arr.get(i) > arr.get(j) * 2 || arr.get(i) < arr.get(j) /2) {
+                                flag1 = true;
+                                break;
+                            }
+                        }
+                    }
+                    if(flag1) {
+                        System.out.println("added " + i);
+                        set.add(i);
+                        sum -= arr.get(i);
+                        c--;
+                        flag = true;
+                    }
+                }
+            }
+        }
+        System.out.println("--------------------------------");
+        return (sum + sumAll)/2 / c;
+    }
+
+    private static void initCount() {
+        for (int i = 0; i < 6; i++) {
+            count.add(new ArrayList<>());
+            for (int j = 0; j < N.length; ++j) {
+                count.get(i).add(new ArrayList<>());
+                for (int k = 0; k < K.length; ++k) {
+                    count.get(i).get(j).add(new ArrayList<>());
+                }
+            }
+        }
+    }
+
     public static void init() {
+        array = new ArrayList<>();
+        answers = new ArrayList<>();
         for (int i = 0; i < N.length; ++i) {
             array.add(new ArrayList<>());
             answers.add(new ArrayList<>());
@@ -113,14 +213,14 @@ public class TestRunner {
         return MatrixUtils.createRealVector(res);
     }
 
-    public static void run(Function<QuadrFunction, AbstractSolver> constructor, String name, int numb) {
+    public static void run(Function<QuadrFunction, AbstractSolver> constructor, String name, int numb, int runN) {
         System.out.println(name);
-        logger.addOrGetSheet(name, false);
-        logger.write("N\\K");
-        for (int k : K) {
-            logger.write(k);
-        }
-        logger.nextLine();
+//        logger.addOrGetSheet(name, false);
+//        logger.write("N\\K");
+//        for (int k : K) {
+//            logger.write(k);
+//        }
+//        logger.nextLine();
         List<AbstractSolver> solvers = new ArrayList<>();
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < N.length; ++i) {
@@ -144,18 +244,19 @@ public class TestRunner {
 
         for (int i = 0; i < N.length; ++i) {
             int n = N[i];
-            logger.write(n);
+//            logger.write(n);
             for (int j = 0; j < K.length; ++j) {
                 AbstractSolver solver = solvers.get(i * K.length + j);
-                long iter = solver.getAllIterations();
-                logger.write(iter);
+                long iter = solver.resetIterations();
+                count.get(numb).get(i).get(j).add(iter);
+//                logger.write(iter);
             }
-            logger.nextLine();
+//            logger.nextLine();
         }
-        try {
-            logger.writeInFile();
-        } catch (IOException ignored) {
-        }
+//        try {
+//            logger.writeInFile();
+//        } catch (IOException ignored) {
+//        }
         System.out.println("Done\n");
     }
 }

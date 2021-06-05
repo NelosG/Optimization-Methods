@@ -62,6 +62,10 @@ void logger::set_page(const std::string &name, const std::vector<std::string> &h
     set_heading(heading);
 }
 
+void logger::flush(){
+    doc.save();
+}
+
 void logger::close() {
     if (doc.workbook().sheetExists("Sheet1")) {
         doc.workbook().deleteSheet("Sheet1");

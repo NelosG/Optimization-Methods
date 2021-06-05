@@ -32,7 +32,7 @@ void create_regular(const std::string &path, const std::string &name, int n, int
                     const std::function<std::pair<regular_matrix, std::vector<double>>(int, int)> &gen_func) {
     auto str = file_utils::open_file(path + "/" + name + std::to_string(n) + (k >= 0 ? ("_" + std::to_string(k)) : "") + ".txt", false);
     auto p = gen_func(n, k);
-    int precision = 100;
+    int precision = 40;
     str << n << "\n\n"
         << print_utils::print(p.first, precision) << "\n\n";
     str << print_utils::print(p.second, precision) << '\n';
@@ -43,7 +43,7 @@ void create_profile(const std::string &path, const std::string &name, int n, int
                     const std::function<std::pair<profile_matrix, std::vector<double>>(int, int)> &gen_func) {
     auto str = file_utils::open_file(path + "/" + name + std::to_string(n) + (k >= 0 ? ("_" + std::to_string(k)) : "") + ".txt", false);
     auto p = gen_func(n, k);
-    int precision = 100;
+    int precision = 40;
     str << print_utils::print(p.first, precision) << "\n\n";
     str << print_utils::print(p.second, precision, true) << '\n';
     str.close();
@@ -53,7 +53,7 @@ void create_sparse(const std::string &path, const std::string &name, int n, int 
                    const std::function<std::pair<sparse_matrix, std::vector<double>>(int, int)> &gen_func) {
     auto str = file_utils::open_file(path + "/" + name + std::to_string(n) + (k >= 0 ? ("_" + std::to_string(k)) : "") + ".txt", false);
     auto p = gen_func(n, k);
-    int precision = 100;
+    int precision = 40;
     str << print_utils::print(p.first, precision) << "\n\n";
     str << print_utils::print(p.second, precision, true) << '\n';
     str.close();

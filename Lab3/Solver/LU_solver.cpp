@@ -35,7 +35,6 @@ std::pair<std::vector<double>, int> Solver::LU_solve(profile_matrix mt, const st
         double sum = vec[i];
         for (int j = 0; j < i; j++) {
             sum -= y[j] * mt.get(i, j);
-            ++iter;
         }
         y[i] = sum / mt.get(i, i);
     }
@@ -44,7 +43,6 @@ std::pair<std::vector<double>, int> Solver::LU_solve(profile_matrix mt, const st
         double sum = y[i];
         for (int j = i + 1; j < n; j++) {
             sum -= mt.get(i, j) * x[j];
-            ++iter;
         }
         x[i] = sum;
     }

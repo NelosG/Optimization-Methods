@@ -3,6 +3,9 @@
 //
 #include <solver.h>
 
+static const double eps = 1E-35;
+
+
 std::vector<double> subtractVectors(std::vector<double> a, const std::vector<double> &b) {
     for (int i = 0; i < a.size(); ++i) {
         a[i] -= b[i];
@@ -45,9 +48,8 @@ std::pair<std::vector<double>, int> Solver::Conjugate_solve(const sparse_matrix 
         std::vector<double> xK = sumVectors(x0, multiply(alphaK, z0));
         std::vector<double> rK = subtractVectors(r0, multiply(alphaK, Az0));
         double betaK = scalar(rK, rK) / scalar(r0, r0);
-        double epsilon = 0.000000001;
         std::vector<double> zK = sumVectors(rK, multiply(betaK, z0));
-        if (sqrt(scalar(rK, rK) / scalar(f, f)) < epsilon) {
+        if (sqrt(scalar(rK, rK) / scalar(f, f)) < eps) {
             return {xK, k};
         }
         x0 = xK;
