@@ -27,10 +27,10 @@ std::pair<double, double> runner::get_modules(const std::vector<double> &in_solv
     std::vector<double> solve = in_solve;
     std::vector<double> ans(solve.size());
     for (int i = 0; i < solve.size(); i++) {
-        solve[i] = solve[i] - i - 1;
+        solve[i] = -solve[i] + i + 1;
         ans.emplace_back(i + 1);
     }
-    return {length(solve), length(solve) / length(in_solve)};
+    return {length(solve), length(solve) / length(ans)};
 }
 
 void runner::read_vec(int n, std::fstream &str, std::vector<int> &res) {

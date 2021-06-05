@@ -5,9 +5,6 @@
 #ifndef PROFILE_MATRIX_H
 #define PROFILE_MATRIX_H
 
-#include <cassert>
-#include <utility>
-
 #include <matrix.h>
 #include <regular_matrix.h>
 

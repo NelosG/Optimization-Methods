@@ -5,8 +5,6 @@
 #ifndef REGULAR_MATRIX_H
 #define REGULAR_MATRIX_H
 
-#include <utility>
-
 #include <matrix.h>
 
 

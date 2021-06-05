@@ -3,7 +3,6 @@
 //
 
 #include <sparse_matrix.h>
-#include <utility>
 constexpr const static double eps = 1E-35;
 
 sparse_matrix::sparse_matrix(std::vector<double> di, std::vector<double> al, std::vector<double> au,
