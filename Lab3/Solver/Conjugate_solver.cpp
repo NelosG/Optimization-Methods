@@ -3,7 +3,7 @@
 //
 #include <solver.h>
 
-static const double eps = 1E-35;
+static const double eps = 1E-10;
 
 
 std::vector<double> subtractVectors(std::vector<double> a, const std::vector<double> &b) {
@@ -40,7 +40,7 @@ std::pair<std::vector<double>, int> Solver::Conjugate_solve(const sparse_matrix 
     x0[0] = 1;
     std::vector<double> r0 = subtractVectors(f, A.smartMultiplication(x0));
     std::vector<double> z0 = r0;
-    int MAX_ITERATIONS = 3000;
+    int MAX_ITERATIONS = 100000;
     int k = 1;
     for (; k < MAX_ITERATIONS; k++) {
         std::vector<double> Az0 = A.smartMultiplication(z0);

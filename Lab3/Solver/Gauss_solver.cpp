@@ -75,6 +75,7 @@ std::pair<int, std::pair<std::vector<double>, int>> Solver::Gauss_solve(regular_
     int iter = 0;
     for (int col = 0, row = 0; col < mt.size() && row < mt.size(); row++) {
         col = row;
+        ++iter;
         while (col < mt.size() && !pivoting(mt, row, col)) {
             col++;
             ++iter;

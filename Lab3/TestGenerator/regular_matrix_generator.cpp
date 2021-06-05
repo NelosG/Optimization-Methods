@@ -7,14 +7,6 @@
 #include <random>
 #include <string>
 
-double get_row_sum(const std::vector<double> &row) {
-    double res = 0;
-    for (int i = 0; i < row.size(); ++i) {
-        res += (i + 1) * row[i];
-    }
-    return res;
-}
-
 std::vector<std::vector<double>> generate_matrix(int n, int k) {
     std::vector<std::vector<double>> res(n, std::vector<double>(n, 0));
     std::string s = std::to_string(time(nullptr));
@@ -36,7 +28,7 @@ std::vector<std::vector<double>> generate_matrix(int n, int k) {
         }
     }
     for (int i = 0; i < n; i++) {
-        res[i][i] = -get_row_sum(res[i]);
+        res[i][i] = -matrix_generator::get_row_sum(res[i]);
         if (i == 0) {
             res[i][i] += pow(10.0, -k);
         }
@@ -47,7 +39,11 @@ std::vector<std::vector<double>> generate_matrix(int n, int k) {
 
 std::pair<regular_matrix, std::vector<double>> matrix_generator::generate_regular(int n, int k) {
     regular_matrix matrix(generate_matrix(n, k));
-    return {matrix, multiply_by_vector(matrix)};
+    std::vector<double> vector(matrix.size(), 0);
+    for (int i = 0; i < matrix.size(); ++i) {
+        vector[i] = i + 1;
+    }
+    return {matrix, multiply_by_vector(matrix, vector)};
 }
 
 std::pair<regular_matrix, std::vector<double>> matrix_generator::generate_Hilbert_regular(int n, int k) {
@@ -58,5 +54,9 @@ std::pair<regular_matrix, std::vector<double>> matrix_generator::generate_Hilber
         }
     }
     regular_matrix matrix(data);
-    return {matrix, multiply_by_vector(matrix)};
+    std::vector<double> vector(matrix.size(), 0);
+    for (int i = 0; i < matrix.size(); ++i) {
+        vector[i] = i + 1;
+    }
+    return {matrix, multiply_by_vector(matrix, vector)};
 }

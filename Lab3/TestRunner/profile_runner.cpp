@@ -41,9 +41,10 @@ void run_test_profile(const std::pair<profile_matrix, std::vector<double>> &p, i
     auto pair2 = runner::get_diff(lu.first);
     lg << n;
     if (k >= 0) {
-        lg << k;
+        lg << k << pair1.first << pair1.second << pair2.first << pair2.second << lu.second;
+    } else {
+        lg << lu.second << pair1.first << pair1.second << pair2.first << pair2.second;
     }
-    lg << pair1.first << pair1.second << pair2.first << pair2.second << lu.second;
     lg.next_line();
 }
 

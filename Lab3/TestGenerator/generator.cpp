@@ -76,15 +76,24 @@ void test_generator::test_creation_sparse(const std::string &path, const std::st
 void test_generator::test_creation_Hilbert_regular(const std::string &path, const std::string &name, int n, int k) {
     create_regular(path, name, n, k, matrix_generator::generate_Hilbert_regular);
 }
+
 void test_generator::test_creation_Hilbert_profile(const std::string &path, const std::string &name, int n, int k) {
     create_profile(path, name, n, k, matrix_generator::generate_Hilbert_profile);
 }
 
-std::vector<double> matrix_generator::multiply_by_vector(const matrix &mt) {
-    std::vector<double> vector(mt.size(), 0);
-    for (int i = 0; i < mt.size(); ++i) {
-        vector[i] = i + 1;
+void test_generator::test_creation_Hilbert_sparse(const std::string &path, const std::string &name, int n, int k) {
+    create_sparse(path, name, n, k, matrix_generator::generate_Hilbert_sparse);
+}
+
+double matrix_generator::get_row_sum(const std::vector<double> &row) {
+    double res = 0;
+    for (int i = 0; i < row.size(); ++i) {
+        res += (i + 1) * row[i];
     }
+    return res;
+}
+
+std::vector<double> matrix_generator::multiply_by_vector(const matrix &mt, const std::vector<double>& vector) {
     std::vector<double> answer(mt.size());
     for (int row = 0; row < mt.size(); row++) {
         for (int col = 0; col < mt.size(); col++) {

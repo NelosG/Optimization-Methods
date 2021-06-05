@@ -33,7 +33,11 @@ void run_test_regular(const std::pair<regular_matrix, std::vector<double>> &p, i
     if (gaus.first == 1) {
         auto pair1 = runner::get_modules(gaus.second.first);
         auto pair2 = runner::get_diff(gaus.second.first);
-        lg << pair1.first << pair1.second << pair2.first << pair2.second << gaus.second.second;
+        if(k >= 0){
+            lg << pair1.first << pair1.second << pair2.first << pair2.second << gaus.second.second;
+        } else {
+            lg << gaus.second.second << pair1.first << pair1.second << pair2.first << pair2.second;
+        }
     } else {
         lg << "no or many solutions";
         lg << "no or many solutions";

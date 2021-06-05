@@ -2,6 +2,7 @@
 // Created by NelosG.
 //
 #include <file_utils.h>
+#include <matrix_generator.h>
 #include <runner.h>
 #include <solver.h>
 
@@ -45,7 +46,14 @@ void run_test_sparse(const std::pair<sparse_matrix, std::vector<double>> &p, int
     if (k >= 0) {
         lg << k;
     }
-    lg << pair1.first << pair1.second << pair2.first << pair2.second << conjugate.second;
+    lg << conjugate.second;
+    std::vector<double> fminAx = p.second;
+    std::vector<double> Ax = matrix_generator::multiply_by_vector(p.first, conjugate.first);
+    for (int i = 0; i < Ax.size(); ++i) {
+        fminAx[i] -= Ax[i];
+    }
+    lg << pair1.first << pair1.second << (pair1.second / (runner::length(fminAx) / runner::length(p.second)));
+    lg << pair2.first << pair2.second;
     lg.next_line();
 }
 

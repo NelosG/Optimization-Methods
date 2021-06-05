@@ -5,14 +5,6 @@
 #include <matrix_generator.h>
 #include <random>
 
-double get_row_sum1(const std::vector<double> &row) {
-    double res = 0;
-    for (int i = 0; i < row.size(); ++i) {
-        res += (i + 1) * row[i];
-    }
-    return res;
-}
-
 std::pair<sparse_matrix, std::vector<double>> matrix_generator::generate_sparse(int n, int k) {
     std::vector<std::vector<double>> res(n, std::vector<double>(n, 0));
     std::string s = std::to_string(time(nullptr));
@@ -27,11 +19,20 @@ std::pair<sparse_matrix, std::vector<double>> matrix_generator::generate_sparse(
         }
     }
     for (int i = 0; i < n; i++) {
-        res[i][i] = -get_row_sum1(res[i]);
+        res[i][i] = -get_row_sum(res[i]);
         if (i == 0) {
             res[i][i] += 1;
         }
     }
     sparse_matrix sp(res);
-    return {sp, multiply_by_vector(sp)};
+    std::vector<double> vector(sp.size(), 0);
+    for (int i = 0; i < sp.size(); ++i) {
+        vector[i] = i + 1;
+    }
+    return {sp, multiply_by_vector(sp, vector)};
+}
+
+std::pair<sparse_matrix, std::vector<double>> matrix_generator::generate_Hilbert_sparse(int n, int k) {
+    auto p = generate_Hilbert_regular(n, k);
+    return {sparse_matrix(p.first), p.second};
 }

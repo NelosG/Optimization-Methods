@@ -21,8 +21,11 @@ namespace matrix_generator {
     std::pair<sparse_matrix, std::vector<double>> generate_sparse(int n, int k);
     std::pair<regular_matrix, std::vector<double>> generate_Hilbert_regular(int n, int k);
     std::pair<profile_matrix, std::vector<double>> generate_Hilbert_profile(int n, int k);
+    std::pair<sparse_matrix, std::vector<double>> generate_Hilbert_sparse(int n, int k);
 
-    std::vector<double> multiply_by_vector(const matrix &mt);
+
+    double get_row_sum(const std::vector<double> &row);
+    std::vector<double> multiply_by_vector(const matrix &mt, const std::vector<double>& vector);
 }// namespace matrix_generator
 
 namespace test_generator {
@@ -36,6 +39,7 @@ namespace test_generator {
     void test_creation_sparse(const std::string &path, const std::string &name, int n, int k);
     void test_creation_Hilbert_regular(const std::string &path, const std::string &name, int n, int k);
     void test_creation_Hilbert_profile(const std::string &path, const std::string &name, int n, int k);
+    void test_creation_Hilbert_sparse(const std::string &path, const std::string &name, int n, int k);
 }// namespace test_generator
 
 #endif//MATRIX_GENERATOR_H

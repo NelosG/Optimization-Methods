@@ -16,7 +16,7 @@ std::pair<double, double> runner::get_diff(const std::vector<double> &solve) {
     return {average / solve.size(), max};
 }
 
-double length(const std::vector<double> vec) {
+double runner::length(const std::vector<double>& vec) {
     double ans = 0;
     for (auto &i : vec) {
         ans += i * i;
