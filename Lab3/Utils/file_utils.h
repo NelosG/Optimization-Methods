@@ -13,11 +13,13 @@ namespace file_utils {
 
     void reset(std::fstream &fstr);
 
-    bool delete_file(const std::string &filename);
-
     void to_end(std::fstream &fstr);
 
     bool delete_file(const std::string &filename, int count_parent_dirs_for_delete);
+
+    bool delete_file(const std::string &filename);
+
+    bool delete_temp_files(const std::string &dirname);
 }// namespace file_utils
 
 #endif//FILE_UTILS_H

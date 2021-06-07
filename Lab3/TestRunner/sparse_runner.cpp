@@ -48,7 +48,7 @@ void run_test_sparse(const std::pair<sparse_matrix, std::vector<double>> &p, int
     }
     lg << conjugate.second;
     std::vector<double> fminAx = p.second;
-    std::vector<double> Ax = matrix_generator::multiply_by_vector(p.first, conjugate.first);
+    std::vector<double> Ax = p.first.multiply_by_vector(conjugate.first);
     for (int i = 0; i < Ax.size(); ++i) {
         fminAx[i] -= Ax[i];
     }

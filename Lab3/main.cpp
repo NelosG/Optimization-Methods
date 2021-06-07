@@ -1,6 +1,11 @@
 #include <ctime>
+#include <file_utils.h>
 #include <matrix_generator.h>
 #include <runner.h>
+#include <chrono>
+#include <boost/asio/post.hpp>
+#include <boost/asio/thread_pool.hpp>
+#include <thread>
 
 void run(const std::string &path, const std::string &path_for_logs, bool generate_tests) {
     std::vector<std::pair<int, std::vector<int>>> NK;
@@ -14,6 +19,7 @@ void run(const std::string &path, const std::string &path_for_logs, bool generat
     }
     for (int i : {10, 100, 500, 1000}) {
         NK.emplace_back(i, std::vector<int>());
+        NKH.emplace_back(i, std::vector<int>());
         for (int j = 0; j < 11; ++j) {
             NK.back().second.emplace_back(j);
         }
@@ -42,9 +48,9 @@ void run(const std::string &path, const std::string &path_for_logs, bool generat
         test_generator::generate_tests(path, "Hilbert-regular", NKH, test_generator::test_creation_Hilbert_regular);
         test_generator::generate_tests(path, "Hilbert-sparse", NKSH, test_generator::test_creation_Hilbert_sparse);
     }
-    logger lg(path_for_logs);
     std::vector<std::string> heading = {"n", "k", "||x* - x||", "||x* - x|| / ||x*||", "Average diff", "Max diff", "Iterations"};
     std::vector<std::string> sparse_heading = {"n", "Iterations", "||x* - x||", "||x* - x||/||x*||", "cond(A)", "Average diff", "Max diff"};
+    logger lg(path_for_logs);
 
     {
         lg.set_page("LU_Profile", heading);
@@ -73,10 +79,21 @@ void run(const std::string &path, const std::string &path_for_logs, bool generat
 }
 
 int main() {
-    std::cout << "start" << '\n';
-    long long start = time(nullptr);
-    std::string path = "../../tests-files/generated-tests";
-    std::string path_for_logs = "../../tests-files/log.xlsx";
-    run(path, path_for_logs, true);
-    std::cout << time(nullptr) - start << "Sec";
+    int count = 7;
+    boost::asio::thread_pool pool(count);
+    using namespace std::chrono_literals;
+
+    for (int i = 1; i <= count; ++i) {
+        boost::asio::post(pool, [i](){
+          std::cout << "Start:" << i << '\n';
+          long long start = time(nullptr);
+          std::string path = "../../tests-files/generated-tests" + std::to_string(i);
+          std::string path_for_logs = "../../tests-files/log" + std::to_string(i) + ".xlsx";
+          run(path, path_for_logs, false);
+          std::cout << time(nullptr) - start << "Sec\n";
+        });
+        std::this_thread::sleep_for(20ms * (13*i +i&1*17 + (i<<2) /3 * 7));
+    }
+    pool.join();
+    file_utils::delete_temp_files("./");
 }

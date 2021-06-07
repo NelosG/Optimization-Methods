@@ -43,7 +43,7 @@ std::pair<regular_matrix, std::vector<double>> matrix_generator::generate_regula
     for (int i = 0; i < matrix.size(); ++i) {
         vector[i] = i + 1;
     }
-    return {matrix, multiply_by_vector(matrix, vector)};
+    return {matrix, matrix.multiply_by_vector(vector)};
 }
 
 std::pair<regular_matrix, std::vector<double>> matrix_generator::generate_Hilbert_regular(int n, int k) {
@@ -58,5 +58,5 @@ std::pair<regular_matrix, std::vector<double>> matrix_generator::generate_Hilber
     for (int i = 0; i < matrix.size(); ++i) {
         vector[i] = i + 1;
     }
-    return {matrix, multiply_by_vector(matrix, vector)};
+    return {matrix, matrix.multiply_by_vector(vector)};
 }

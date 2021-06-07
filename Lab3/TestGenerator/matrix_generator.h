@@ -25,7 +25,6 @@ namespace matrix_generator {
 
 
     double get_row_sum(const std::vector<double> &row);
-    std::vector<double> multiply_by_vector(const matrix &mt, const std::vector<double>& vector);
 }// namespace matrix_generator
 
 namespace test_generator {

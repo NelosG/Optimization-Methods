@@ -29,7 +29,7 @@ std::pair<sparse_matrix, std::vector<double>> matrix_generator::generate_sparse(
     for (int i = 0; i < sp.size(); ++i) {
         vector[i] = i + 1;
     }
-    return {sp, multiply_by_vector(sp, vector)};
+    return {sp, sp.multiply_by_vector(vector)};
 }
 
 std::pair<sparse_matrix, std::vector<double>> matrix_generator::generate_Hilbert_sparse(int n, int k) {
