@@ -21,7 +21,7 @@ double runner::length(const std::vector<double>& vec) {
     for (auto &i : vec) {
         ans += i * i;
     }
-    return ans;
+    return sqrt(ans);
 }
 std::pair<double, double> runner::get_modules(const std::vector<double> &in_solve) {
     std::vector<double> solve = in_solve;

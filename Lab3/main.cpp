@@ -7,7 +7,8 @@
 #include <boost/asio/thread_pool.hpp>
 #include <thread>
 
-void run(const std::string &path, const std::string &path_for_logs, bool generate_tests) {
+
+void run(const std::string &path, const std::string &path_for_logs, bool generate_tests, int mode) {
     std::vector<std::pair<int, std::vector<int>>> NK;
     std::vector<std::pair<int, std::vector<int>>> NKH;
     std::vector<std::pair<int, std::vector<int>>> NKS;
@@ -44,9 +45,11 @@ void run(const std::string &path, const std::string &path_for_logs, bool generat
         test_generator::generate_tests(path, "profile", NK, test_generator::test_creation_profile);
         test_generator::generate_tests(path, "regular", NK, test_generator::test_creation_regular);
         test_generator::generate_tests(path, "sparse", NKS, test_generator::test_creation_sparse);
-        test_generator::generate_tests(path, "Hilbert-profile", NKH, test_generator::test_creation_Hilbert_profile);
-        test_generator::generate_tests(path, "Hilbert-regular", NKH, test_generator::test_creation_Hilbert_regular);
-        test_generator::generate_tests(path, "Hilbert-sparse", NKSH, test_generator::test_creation_Hilbert_sparse);
+        if(mode == 2) {
+            test_generator::generate_tests(path, "Hilbert-profile", NKH, test_generator::test_creation_Hilbert_profile);
+            test_generator::generate_tests(path, "Hilbert-regular", NKH, test_generator::test_creation_Hilbert_regular);
+            test_generator::generate_tests(path, "Hilbert-sparse", NKSH, test_generator::test_creation_Hilbert_sparse);
+        }
     }
     std::vector<std::string> heading = {"n", "k", "||x* - x||", "||x* - x|| / ||x*||", "Average diff", "Max diff", "Iterations"};
     std::vector<std::string> sparse_heading = {"n", "Iterations", "||x* - x||", "||x* - x||/||x*||", "cond(A)", "Average diff", "Max diff"};
@@ -63,7 +66,7 @@ void run(const std::string &path, const std::string &path_for_logs, bool generat
         runner::run_all_tests_sparse(path, "sparse", NKS, lg);
     }
 
-    { // Hilbert
+    if(mode == 2) { // Hilbert
         heading.erase(--heading.end());
         heading[1] = "Iterations";
         lg.set_page("LU_Hilbert_Profile", heading);
@@ -87,9 +90,9 @@ int main() {
         boost::asio::post(pool, [i](){
           std::cout << "Start:" << i << '\n';
           long long start = time(nullptr);
-          std::string path = "../../tests-files/generated-tests" + std::to_string(i);
-          std::string path_for_logs = "../../tests-files/log" + std::to_string(i) + ".xlsx";
-          run(path, path_for_logs, false);
+          std::string path = "../../tests-files/generated-tests" + (i == 1 ? "" : std::to_string(i));
+          std::string path_for_logs = "../../tests-files/log" + (i == 1 ? "" : std::to_string(i)) + ".xlsx";
+          run(path, path_for_logs, true, (i == 1 ? 2 : 1));
           std::cout << time(nullptr) - start << "Sec\n";
         });
         std::this_thread::sleep_for(20ms * (13*i +i&1*17 + (i<<2) /3 * 7));
