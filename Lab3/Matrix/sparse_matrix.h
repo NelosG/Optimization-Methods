@@ -53,12 +53,12 @@ public:
         return ja;
     }
 
-    std::vector<double> smartMultiplication(std::vector<double> &vector) const;
+    std::vector<double> multiply(std::vector<double> &vector) const;
 
     ~sparse_matrix() = default;
 
 private:
-    static int getRowProfileLen(const matrix &mt, int row, std::vector<double> &alList,
+    static int get_row_profile_length(const matrix &mt, int row, std::vector<double> &alList,
                                 std::vector<double> &auList, std::vector<int> &jaList);
 };
 

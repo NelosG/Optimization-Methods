@@ -27,22 +27,16 @@ sparse_matrix::sparse_matrix(const matrix &mt) {
     ia[0] = 0;
     ia[1] = 0;
     for (int i = 1; i < mt.size(); i++) {
-        // сколько эл-ов в профиле в i-ой строке
-        ia[i + 1] = ia[i] + getRowProfileLen(mt, i, alList, auList, jaList);
+        ia[i + 1] = ia[i] + get_row_profile_length(mt, i, alList, auList, jaList);
     }
 
-    // заполнили индексы для строк
     al.assign(alList.size(), 0);
     au.assign(auList.size(), 0);
     ja.assign(jaList.size(), 0);
 
     for (int i = 0; i < alList.size(); i++) {
         al[i] = alList[i];
-    }
-    for (int i = 0; i < auList.size(); i++) {
         au[i] = auList[i];
-    }
-    for (int i = 0; i < jaList.size(); i++) {
         ja[i] = jaList[i];
     }
 }
@@ -59,28 +53,27 @@ double sparse_matrix::get(int a, int b) const {
         return diagonal[a];
     }
     bool flag = true;
-    if (b > a) {// now minimum is a
+    if (b > a) {
         int temp = b;
         b = a;
         a = temp;
         flag = false;
     }
-    int countInRow = ia[a + 1] - ia[a];
-    std::vector<int> getAllColumnsInRow;
-    for (int i = ia[a]; i < ia[a] + countInRow; i++) {
-        getAllColumnsInRow.emplace_back(ja[i]);
+    std::vector<int> all_columns;
+    for (int i = ia[a]; i < ia[a + 1]; i++) {
+        all_columns.emplace_back(ja[i]);
     }
-    if (find(getAllColumnsInRow, b)) {
+    if (find(all_columns, b)) {
         if (flag) {
-            return al[ia[a] + find(getAllColumnsInRow, b) - 1];
+            return al[ia[a] + find(all_columns, b) - 1];
         } else {
-            return au[ia[a] + find(getAllColumnsInRow, b) - 1];
+            return au[ia[a] + find(all_columns, b) - 1];
         }
     } else {
         return 0;
     }
 }
-std::vector<double> sparse_matrix::smartMultiplication(std::vector<double> &vector) const {
+std::vector<double> sparse_matrix::multiply(std::vector<double> &vector) const {
     int leftBorderInJa = 0;
     std::vector<double> result(vector.size(), 0);
     for (int i = 0; i < diagonal.size(); i++) {
@@ -95,7 +88,7 @@ std::vector<double> sparse_matrix::smartMultiplication(std::vector<double> &vect
     }
     return result;
 }
-int sparse_matrix::getRowProfileLen(const matrix &mt, int row,
+int sparse_matrix::get_row_profile_length(const matrix &mt, int row,
                                     std::vector<double> &alList, std::vector<double> &auList, std::vector<int> &jaList) {
     int index = 0;
     int count = 0;

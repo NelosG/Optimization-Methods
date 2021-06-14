@@ -4,7 +4,7 @@
 
 #include <solver.h>
 
-double countLUElement(int i, int j, int ind, double start, const profile_matrix &matrix) {
+double count_LU(int i, int j, int ind, double start, const profile_matrix &matrix) {
     double sum = start;
     for (int k = 0; k < ind; k++) {
         sum -= matrix.get(i, k) * matrix.get(k, j);
@@ -18,16 +18,16 @@ std::pair<std::vector<double>, int> Solver::LU_solve(profile_matrix mt, const st
     mt.set(0, 0, mt.get(0, 0));
     for (int i = 1; i < n; i++) {
         for (int j = 0; j < i; j++) {
-            double lij = countLUElement(i, j, j, mt.get(i, j), mt);
+            double lij = count_LU(i, j, j, mt.get(i, j), mt);
             mt.set(i, j, lij);
             ++iter;
         }
         for (int j = 0; j < i; j++) {
-            double uji = (countLUElement(j, i, j, mt.get(j, i), mt)) / mt.get(j, j);
+            double uji = (count_LU(j, i, j, mt.get(j, i), mt)) / mt.get(j, j);
             mt.set(j, i, uji);
             ++iter;
         }
-        double lii = countLUElement(i, i, i, mt.get(i, i), mt);
+        double lii = count_LU(i, i, i, mt.get(i, i), mt);
         mt.set(i, i, lii);
     }
     std::vector<double> y(n, 0);

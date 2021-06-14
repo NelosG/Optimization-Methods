@@ -54,18 +54,9 @@ private:
         return ia[i] - 1 + j - i + profile_length(i);
     }
 
-    [[nodiscard]] double get_U_O_L_element(bool isLower, int i, int j) const;//get Upper Or Lower element
+    [[nodiscard]] double get_UOL_element(bool isLower, int i, int j) const;
 
-    void setUpperOrLower(int i, int j, double element, bool isLower) {
-        if (j < i - profile_length(i)) {
-            return;
-        }
-        if (isLower) {
-            al[index_in_triangle(i, j)] = element;
-        } else {
-            au[index_in_triangle(i, j)] = element;
-        }
-    }
+    void set_UOL(int i, int j, double element, bool is_lower);
 
     std::vector<double> diagonal;
     std::vector<double> al;
