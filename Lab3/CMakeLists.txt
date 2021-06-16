@@ -13,6 +13,27 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build${suffix}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build${suffix}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build${suffix}/bin)
 
+set(SOURCE_FOR_Excel-Logger ${CMAKE_CURRENT_LIST_DIR}/Excel-Logger${suffix})
+
+configure_file(CMakeLists.txt.in Excel-Logger-download/CMakeLists.txt)
+
+execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-download )
+if(result)
+    message(FATAL_ERROR "CMake step for Excel-Logger failed: ${result}")
+endif()
+execute_process(COMMAND ${CMAKE_COMMAND} --build .
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-download )
+if(result)
+    message(FATAL_ERROR "Build step for Excel-Logger failed: ${result}")
+endif()
+
+add_subdirectory(
+        ${SOURCE_FOR_Excel-Logger}
+)
+
 set(UtilsSource Utils/file_utils.h Utils/file_utils.cpp
         Utils/print_utils.h Utils/print_utils.cpp)
 
@@ -40,7 +61,6 @@ set(MatrixSource Matrix/matrix.h
         Matrix/sparse_matrix.h Matrix/sparse_matrix.cpp
         Matrix/regular_matrix.h)
 
-add_subdirectory(Logger)
 
 find_package(Boost "1.40.0" COMPONENTS system REQUIRED)
 if (Boost_FOUND)
@@ -63,4 +83,3 @@ target_include_directories(Meth_Opt_Lab3
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/Utils>)
 target_link_libraries(Meth_Opt_Lab3 PUBLIC logger-static ${Boost_LIBRARIES})
 
-file(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/tests-files)

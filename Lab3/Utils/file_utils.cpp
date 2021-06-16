@@ -7,11 +7,14 @@
 std::fstream file_utils::open_file(const std::string &filename, bool add) {
     std::filesystem::path p(filename);
     p = proximate(p);
-    std::filesystem::create_directories(p.parent_path());
+    auto pp = p.parent_path();
+    if(!pp.empty()) {
+        std::filesystem::create_directories(pp);
+    }
 
     std::fstream fstr;
-    if (add && std::filesystem::exists(p)) {
-        fstr.open(p, std::ios_base::out | std::ios_base::in | std::ios_base::app);
+    if (std::filesystem::exists(p)) {
+        fstr.open(p, std::ios_base::out | std::ios_base::in | (add ? std::ios_base::app : 0));
     } else {
         fstr.open(p, std::ios_base::out | std::ios_base::in | std::ios_base::trunc);
     }
