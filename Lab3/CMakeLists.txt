@@ -13,7 +13,6 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build${suffix}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build${suffix}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build${suffix}/bin)
 
-set(SOURCE_FOR_Excel-Logger ${CMAKE_CURRENT_LIST_DIR}/Excel-Logger${suffix})
 
 configure_file(CMakeLists.txt.in Excel-Logger-download/CMakeLists.txt)
 
@@ -31,7 +30,8 @@ if(result)
 endif()
 
 add_subdirectory(
-        ${SOURCE_FOR_Excel-Logger}
+        ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-src
+        ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-build
 )
 
 set(UtilsSource Utils/file_utils.h Utils/file_utils.cpp
