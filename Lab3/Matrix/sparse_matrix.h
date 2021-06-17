@@ -59,7 +59,7 @@ public:
 
 private:
     static int get_row_profile_length(const matrix &mt, int row, std::vector<double> &alList,
-                                std::vector<double> &auList, std::vector<int> &jaList);
+                                      std::vector<double> &auList, std::vector<int> &jaList);
 };
 
 

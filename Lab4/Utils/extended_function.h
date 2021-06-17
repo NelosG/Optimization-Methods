@@ -4,18 +4,20 @@
 
 #ifndef EXTENDED_FUNCTION_H
 #define EXTENDED_FUNCTION_H
-#include "point.h"
+
 #include <functional>
 
+#include <point.h>
+
 class extended_function {
-    std::function<double(point)> f;
-    std::function<std::vector<double>(point)> gradientF;
-    std::function<std::vector<std::vector<double>>(point)> hessianF;
+    std::function<double(const point &)> f;
+    std::function<std::vector<double>(const point &)> gradientF;
+    std::function<std::vector<std::vector<double>>(const point &)> hessianF;
 
 public:
-    extended_function(const std::function<double(point)> &f,
-                      const std::function<std::vector<double>(point)> &gradientF,
-                      const std::function<std::vector<std::vector<double>>(point)> &hessianF) {
+    extended_function(const std::function<double(const point &)> &f,
+                      const std::function<std::vector<double>(const point &)> &gradientF,
+                      const std::function<std::vector<std::vector<double>>(const point &)> &hessianF) {
         this->f = f;
         this->gradientF = gradientF;
         this->hessianF = hessianF;

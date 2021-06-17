@@ -1,10 +1,10 @@
+#include <boost/asio/post.hpp>
+#include <boost/asio/thread_pool.hpp>
+#include <chrono>
 #include <ctime>
 #include <file_utils.h>
 #include <matrix_generator.h>
 #include <runner.h>
-#include <chrono>
-#include <boost/asio/post.hpp>
-#include <boost/asio/thread_pool.hpp>
 #include <thread>
 
 
@@ -45,7 +45,7 @@ void run(const std::string &path, const std::string &path_for_logs, bool generat
         test_generator::generate_tests(path, "profile", NK, test_generator::test_creation_profile);
         test_generator::generate_tests(path, "regular", NK, test_generator::test_creation_regular);
         test_generator::generate_tests(path, "sparse", NKS, test_generator::test_creation_sparse);
-        if(mode == 2) {
+        if (mode == 2) {
             test_generator::generate_tests(path, "Hilbert-profile", NKH, test_generator::test_creation_Hilbert_profile);
             test_generator::generate_tests(path, "Hilbert-regular", NKH, test_generator::test_creation_Hilbert_regular);
             test_generator::generate_tests(path, "Hilbert-sparse", NKSH, test_generator::test_creation_Hilbert_sparse);
@@ -60,13 +60,12 @@ void run(const std::string &path, const std::string &path_for_logs, bool generat
         runner::run_all_tests_profile(path, "profile", NK, lg);
 
         lg.set_page("Gauss_Regular", heading);
-        runner::run_all_tests_regular(path, "regular", NK, lg)
-                ;
+        runner::run_all_tests_regular(path, "regular", NK, lg);
         lg.set_page("Conjugate_Sparse", sparse_heading);
         runner::run_all_tests_sparse(path, "sparse", NKS, lg);
     }
 
-    if(mode == 2) { // Hilbert
+    if (mode == 2) {// Hilbert
         heading.erase(--heading.end());
         heading[1] = "Iterations";
         lg.set_page("LU_Hilbert_Profile", heading);
@@ -87,15 +86,15 @@ int main() {
     using namespace std::chrono_literals;
 
     for (int i = 1; i <= count; ++i) {
-        boost::asio::post(pool, [i](){
-          std::cout << "Start:" << i << '\n';
-          long long start = time(nullptr);
-          std::string path = "../../tests-files/generated-tests" + (i == 1 ? "" : std::to_string(i));
-          std::string path_for_logs = "../../tests-files/log" + (i == 1 ? "" : std::to_string(i)) + ".xlsx";
-          run(path, path_for_logs, true, (i == 1 ? 2 : 1));
-          std::cout << time(nullptr) - start << "Sec\n";
+        boost::asio::post(pool, [i]() {
+            std::cout << "Start:" << i << '\n';
+            long long start = time(nullptr);
+            std::string path = "../../tests-files/generated-tests" + (i == 1 ? "" : std::to_string(i));
+            std::string path_for_logs = "../../tests-files/log" + (i == 1 ? "" : std::to_string(i)) + ".xlsx";
+            run(path, path_for_logs, true, (i == 1 ? 2 : 1));
+            std::cout << time(nullptr) - start << "Sec\n";
         });
-        std::this_thread::sleep_for(20ms * (13*i +i&1*17 + (i<<2) /3 * 7));
+        std::this_thread::sleep_for(20ms * (13 * i + i & 1 * 17 + (i << 2) / 3 * 7));
     }
     pool.join();
     file_utils::delete_temp_files("./");

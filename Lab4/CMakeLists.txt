@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
     set(suffix -release)
-else()
+else ()
     set(suffix -debug)
 endif ()
 
@@ -18,19 +18,19 @@ configure_file(CMakeLists.txt.in Excel-Logger-download/CMakeLists.txt)
 
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
         RESULT_VARIABLE result
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-download )
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-download)
 
-if(result)
+if (result)
     message(FATAL_ERROR "CMake step for Excel-Logger failed: ${result}")
-endif()
+endif ()
 
 execute_process(COMMAND ${CMAKE_COMMAND} --build .
         RESULT_VARIABLE result
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-download )
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-download)
 
-if(result)
+if (result)
     message(FATAL_ERROR "Build step for Excel-Logger failed: ${result}")
-endif()
+endif ()
 
 add_subdirectory(
         ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-src
@@ -59,6 +59,12 @@ set(Utils_Sources Utils/point.h
         Utils/utils.cpp)
 
 add_executable(Meth_Opt_Lab4 main.cpp Source.h Source.cpp ${Utils_Sources} ${Methods_Sources})
+
+target_include_directories(Meth_Opt_Lab4
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/Methods>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/Utils>)
 
 
 target_link_libraries(Meth_Opt_Lab4 PUBLIC logger)

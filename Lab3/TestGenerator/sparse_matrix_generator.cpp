@@ -1,9 +1,11 @@
 //
 // Created by NelosG.
 //
+
 #include <ctime>
-#include <matrix_generator.h>
 #include <random>
+
+#include "matrix_generator.h"
 
 std::pair<sparse_matrix, std::vector<double>> matrix_generator::generate_sparse(int n, int k) {
     std::vector<std::vector<double>> res(n, std::vector<double>(n, 0));

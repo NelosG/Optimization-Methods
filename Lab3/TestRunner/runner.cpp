@@ -1,22 +1,25 @@
 //
 // Created by NelosG.
 //
-#include <runner.h>
+
+#include <cmath>
+
+#include "runner.h"
 
 std::pair<double, double> runner::get_diff(const std::vector<double> &solve) {
     double max = -1;
     double average = 0;
     for (int i = 0; i < solve.size(); ++i) {
-        double diff = abs(i + 1 - solve[i]);
+        double diff = std::abs(i + 1 - solve[i]);
         if (max < diff) {
             max = diff;
         }
         average += diff;
     }
-    return {average / solve.size(), max};
+    return {average / (double) solve.size(), max};
 }
 
-double runner::length(const std::vector<double>& vec) {
+double runner::length(const std::vector<double> &vec) {
     double ans = 0;
     for (auto &i : vec) {
         ans += i * i;

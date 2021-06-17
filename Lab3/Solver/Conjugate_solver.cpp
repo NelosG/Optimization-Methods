@@ -1,10 +1,12 @@
 //
 // Created by NelosG.
 //
-#include <solver.h>
+
+#include <cmath>
+
+#include "solver.h"
 
 static const double eps = 1E-10;
-
 
 std::vector<double> subtract_vectors(std::vector<double> a, const std::vector<double> &b) {
     for (int i = 0; i < a.size(); ++i) {

@@ -4,10 +4,11 @@
 
 #ifndef NEWTONDIRECTIONDESCENT_H
 #define NEWTONDIRECTIONDESCENT_H
-#include "../Utils/extended_function.h"
-#include "../Utils/point.h"
-#include "../Utils/utils.h"
-#include "method.h"
+
+#include <extended_function.h>
+#include <method.h>
+#include <point.h>
+#include <utils.h>
 
 class NewtonDirectionDescent : public method {
 public:

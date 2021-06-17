@@ -3,8 +3,9 @@
 //
 
 #include <iomanip>
-#include <print_utils.h>
 #include <sstream>
+
+#include "print_utils.h"
 
 namespace print_utils {
 
@@ -108,12 +109,12 @@ namespace print_utils {
         double max = -1;
         double average = 0;
         for (int i = 0; i < solve.size(); ++i) {
-            double diff = abs(i + 1 - solve[i]);
+            double diff = std::abs(i + 1 - solve[i]);
             if (max < diff) {
                 max = diff;
             }
             average += diff;
         }
-        return "Average: " + std::to_string(average / solve.size()) + "        maxDiff: " + std::to_string(max) + '\n';
+        return "Average: " + std::to_string(average / (double) solve.size()) + "        maxDiff: " + std::to_string(max) + '\n';
     }
 }// namespace print_utils

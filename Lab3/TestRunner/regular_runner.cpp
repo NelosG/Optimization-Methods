@@ -1,9 +1,11 @@
 //
 // Created by NelosG.
 //
+
+#include "runner.h"
+
 #include <file_utils.h>
 #include <print_utils.h>
-#include <runner.h>
 #include <solver.h>
 
 std::pair<regular_matrix, std::vector<double>> runner::test_read_regular(const std::string &path) {
@@ -33,7 +35,7 @@ void run_test_regular(const std::pair<regular_matrix, std::vector<double>> &p, i
     if (gaus.first == 1) {
         auto pair1 = runner::get_modules(gaus.second.first);
         auto pair2 = runner::get_diff(gaus.second.first);
-        if(k >= 0){
+        if (k >= 0) {
             lg << pair1.first << pair1.second << pair2.first << pair2.second << gaus.second.second;
         } else {
             lg << gaus.second.second << pair1.first << pair1.second << pair2.first << pair2.second;

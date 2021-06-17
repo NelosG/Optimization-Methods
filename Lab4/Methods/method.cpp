@@ -1,7 +1,11 @@
 //
 // Created by NelosG.
 //
+
+#include <cmath>
+
 #include "method.h"
+
 point method::slay(std::vector<std::vector<double>> h, std::vector<double> f) {
     size_t n = f.size();
 
@@ -13,7 +17,7 @@ point method::slay(std::vector<std::vector<double>> h, std::vector<double> f) {
     for (int row = 0; row < n; row++) {
         int sel = row;
         for (int i = row + 1; i < n; i++) {
-            if (abs(h[real[i]][row]) > abs(h[real[sel]][row])) {
+            if (std::abs(h[real[i]][row]) > std::abs(h[real[sel]][row])) {
                 sel = i;
             }
         }
@@ -54,7 +58,7 @@ double method::count_lambda(extended_function function, point x, point d) {
     x2 = b - PHI * (b - a);
     f1 = f(x1);
     f2 = f(x2);
-    while (abs(b - a) > EPS) {
+    while (std::abs(b - a) > EPS) {
         if (f1 < f2) {
             b = x2;
             x2 = x1;

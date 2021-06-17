@@ -5,7 +5,6 @@
 #ifndef FILE_UTILS_H
 #define FILE_UTILS_H
 
-#include <filesystem>
 #include <fstream>
 
 namespace file_utils {

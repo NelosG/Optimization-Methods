@@ -5,7 +5,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "point.h"
+#include <point.h>
+
 class utils {
 public:
     static std::vector<std::vector<double>> vectors_multiplication(const std::vector<double> &x,

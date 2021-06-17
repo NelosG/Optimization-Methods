@@ -2,7 +2,10 @@
 // Created by NelosG.
 //
 
+#include <cmath>
+
 #include "utils.h"
+
 point utils::multiply_on_scalar(const point &x, double l) {
     size_t n = x.get_coordinates().size();
     std::vector<double> c(n, 0);

@@ -5,11 +5,12 @@
 #ifndef REGULAR_RUNNER_H
 #define REGULAR_RUNNER_H
 
+#include <string>
+
 #include <logger.h>
 #include <profile_matrix.h>
 #include <regular_matrix.h>
 #include <sparse_matrix.h>
-#include <string>
 
 namespace runner {
     std::pair<regular_matrix, std::vector<double>> test_read_regular(const std::string &path);
@@ -28,7 +29,7 @@ namespace runner {
 
     std::pair<double, double> get_modules(const std::vector<double> &solve);
 
-    double length(const std::vector<double>& vec);
+    double length(const std::vector<double> &vec);
 
     void read_vec(int n, std::fstream &str, std::vector<int> &res);
     void read_vec(int n, std::fstream &str, std::vector<double> &res);

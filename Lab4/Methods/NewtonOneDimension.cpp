@@ -3,7 +3,7 @@
 //
 
 #include "NewtonOneDimension.h"
-#include <iostream>
+
 point NewtonOneDimension::minimum(extended_function f, point x0, double eps) {
     iter = 0;
     point d, s, x(x0);

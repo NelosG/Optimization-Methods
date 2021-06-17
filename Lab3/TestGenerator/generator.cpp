@@ -1,17 +1,21 @@
 //
 // Created by NelosG.
 //
+
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/post.hpp>
 #include <boost/asio/thread_pool.hpp>
 #include <boost/thread/thread.hpp>
+#include <thread>
+
 #include <file_utils.h>
-#include <matrix_generator.h>
+
+#include "matrix_generator.h"
 
 void test_generator::generate_tests(const std::string &path, const std::string &name,
                                     const std::vector<std::pair<int, std::vector<int>>> &NK,
                                     const std::function<void(const std::string &, const std::string &, int, int)> &test_creation) {
-    int count = std::thread::hardware_concurrency();
+    size_t count = std::thread::hardware_concurrency();
     count = count == 1 ? count : count - 1;
     boost::asio::thread_pool pool(count);
 

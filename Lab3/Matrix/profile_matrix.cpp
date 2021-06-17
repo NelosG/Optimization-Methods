@@ -2,7 +2,7 @@
 // Created by NelosG.
 //
 
-#include <profile_matrix.h>
+#include "profile_matrix.h"
 
 profile_matrix::profile_matrix(const matrix &mt) {
     ia.assign(mt.size() + 1, 0);

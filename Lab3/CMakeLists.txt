@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
     set(suffix -release)
-else()
+else ()
     set(suffix -debug)
 endif ()
 
@@ -18,16 +18,16 @@ configure_file(CMakeLists.txt.in Excel-Logger-download/CMakeLists.txt)
 
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
         RESULT_VARIABLE result
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-download )
-if(result)
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-download)
+if (result)
     message(FATAL_ERROR "CMake step for Excel-Logger failed: ${result}")
-endif()
+endif ()
 execute_process(COMMAND ${CMAKE_COMMAND} --build .
         RESULT_VARIABLE result
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-download )
-if(result)
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-download)
+if (result)
     message(FATAL_ERROR "Build step for Excel-Logger failed: ${result}")
-endif()
+endif ()
 
 add_subdirectory(
         ${CMAKE_CURRENT_BINARY_DIR}/Excel-Logger-src

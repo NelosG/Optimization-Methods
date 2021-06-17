@@ -3,7 +3,7 @@
 //
 
 #include "Newton.h"
-#include <iostream>
+
 point Newton::minimum(extended_function f, point x0, double eps) {
     iter = 1;
     //    std::cout << x0.to_string() << '\n';

@@ -2,8 +2,10 @@
 // Created by NelosG.
 //
 
-#include "BroadenFletcherChen.h"
 #include <iostream>
+
+#include "BroadenFletcherChen.h"
+
 point BroadenFletcherChen::minimum(extended_function f, point x0, double eps) {
     point x(x0);
     point gradient(f.gradient(x));

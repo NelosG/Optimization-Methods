@@ -3,9 +3,10 @@
 //
 
 #include <ctime>
-#include <matrix_generator.h>
 #include <random>
 #include <string>
+
+#include "matrix_generator.h"
 
 std::vector<std::vector<double>> generate_matrix(int n, int k) {
     std::vector<std::vector<double>> res(n, std::vector<double>(n, 0));

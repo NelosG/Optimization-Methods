@@ -3,7 +3,7 @@
 //
 
 #include "Powell.h"
-#include <iostream>
+
 point Powell::minimum(extended_function f, point x0, double eps) {
     point x(x0);
     point w = utils::negative(point(f.gradient(x)));

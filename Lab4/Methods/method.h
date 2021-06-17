@@ -4,11 +4,12 @@
 
 #ifndef METHOD_H
 #define METHOD_H
-#include "../Utils/extended_function.h"
-#include "../Utils/point.h"
-#include "../Utils/utils.h"
+
 #include <vector>
 
+#include <extended_function.h>
+#include <point.h>
+#include <utils.h>
 
 class method {
 

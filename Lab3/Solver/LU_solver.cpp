@@ -2,7 +2,7 @@
 // Created by NelosG.
 //
 
-#include <solver.h>
+#include "solver.h"
 
 double count_LU(int i, int j, int ind, double start, const profile_matrix &matrix) {
     double sum = start;

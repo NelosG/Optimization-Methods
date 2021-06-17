@@ -1,10 +1,12 @@
 //
 // Created by NelosG.
 //
+
+#include "runner.h"
+
 #include <file_utils.h>
 #include <logger.h>
 #include <print_utils.h>
-#include <runner.h>
 #include <solver.h>
 
 std::pair<profile_matrix, std::vector<double>> runner::test_read_profile(const std::string &path) {

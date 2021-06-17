@@ -4,6 +4,7 @@
 
 #ifndef POINT_H
 #define POINT_H
+
 #include <sstream>
 #include <string>
 #include <utility>

@@ -4,10 +4,11 @@
 
 #ifndef BROADENFLETCHERCHEN_H
 #define BROADENFLETCHERCHEN_H
-#include "../Utils/extended_function.h"
-#include "../Utils/point.h"
-#include "../Utils/utils.h"
-#include "method.h"
+
+#include <extended_function.h>
+#include <method.h>
+#include <point.h>
+#include <utils.h>
 
 class BroadenFletcherChen : public method {
 public:

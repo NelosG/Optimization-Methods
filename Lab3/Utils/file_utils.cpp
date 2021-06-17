@@ -1,23 +1,26 @@
 //
 // Created by NelosG.
 //
-#include <file_utils.h>
-#include <iostream>
+
+#include "file_utils.h"
+#include <filesystem>
 
 std::fstream file_utils::open_file(const std::string &filename, bool add) {
     std::filesystem::path p(filename);
     p = proximate(p);
     auto pp = p.parent_path();
-    if(!pp.empty()) {
+    if (!pp.empty()) {
         std::filesystem::create_directories(pp);
     }
 
     std::fstream fstr;
-    if (std::filesystem::exists(p)) {
-        fstr.open(p, std::ios_base::out | std::ios_base::in | (add ? std::ios_base::app : 0));
+    std::ios_base::openmode mode = std::ios_base::out | std::ios_base::in;
+    if (std::filesystem::exists(p) && add) {
+        mode |= std::ios_base::app;
     } else {
-        fstr.open(p, std::ios_base::out | std::ios_base::in | std::ios_base::trunc);
+        mode |= std::ios_base::trunc;
     }
+    fstr.open(p.string(), mode);
     return fstr;
 }
 

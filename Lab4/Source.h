@@ -5,11 +5,12 @@
 #ifndef SOURCE_H
 #define SOURCE_H
 
-
-#include "Utils/extended_function.h"
-#include "Utils/point.h"
 #include <utility>
 #include <vector>
+
+#include <extended_function.h>
+#include <point.h>
+
 class Source;
 class Data {
     extended_function function;

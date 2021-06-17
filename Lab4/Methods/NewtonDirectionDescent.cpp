@@ -3,7 +3,7 @@
 //
 
 #include "NewtonDirectionDescent.h"
-#include <iostream>
+
 point NewtonDirectionDescent::minimum(extended_function f, point x0, double eps) {
     iter = 1;
     point x(x0);

@@ -4,11 +4,14 @@
 
 #ifndef PRINT_UTILS_H
 #define PRINT_UTILS_H
+
+#include <string>
+#include <vector>
+
 #include <profile_matrix.h>
 #include <regular_matrix.h>
 #include <sparse_matrix.h>
-#include <string>
-#include <vector>
+
 namespace print_utils {
     std::string print(const regular_matrix &mt, int precision);
 

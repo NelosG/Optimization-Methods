@@ -4,13 +4,15 @@
 
 #ifndef MATRIX_GENERATOR_H
 #define MATRIX_GENERATOR_H
+
 #include <functional>
+#include <vector>
+
 #include <matrix.h>
 #include <print_utils.h>
 #include <profile_matrix.h>
 #include <regular_matrix.h>
 #include <sparse_matrix.h>
-#include <vector>
 
 
 namespace matrix_generator {

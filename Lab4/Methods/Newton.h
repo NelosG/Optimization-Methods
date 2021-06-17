@@ -4,9 +4,10 @@
 
 #ifndef NEWTON_H
 #define NEWTON_H
-#include "../Utils/extended_function.h"
-#include "../Utils/utils.h"
-#include "method.h"
+
+#include <extended_function.h>
+#include <method.h>
+#include <utils.h>
 
 class Newton : public method {
     int iter = 0;

@@ -1,9 +1,11 @@
 //
 // Created by NelosG.
 //
+
+#include "runner.h"
+
 #include <file_utils.h>
 #include <matrix_generator.h>
-#include <runner.h>
 #include <solver.h>
 
 std::pair<sparse_matrix, std::vector<double>> runner::test_read_sparse(const std::string &path) {

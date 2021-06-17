@@ -2,7 +2,10 @@
 // Created by NelosG.
 //
 
-#include <sparse_matrix.h>
+#include <cmath>
+
+#include "sparse_matrix.h"
+
 constexpr const static double eps = 1E-35;
 
 sparse_matrix::sparse_matrix(std::vector<double> di, std::vector<double> al, std::vector<double> au,
@@ -89,11 +92,11 @@ std::vector<double> sparse_matrix::multiply(std::vector<double> &vector) const {
     return result;
 }
 int sparse_matrix::get_row_profile_length(const matrix &mt, int row,
-                                    std::vector<double> &alList, std::vector<double> &auList, std::vector<int> &jaList) {
+                                          std::vector<double> &alList, std::vector<double> &auList, std::vector<int> &jaList) {
     int index = 0;
     int count = 0;
     while (index != row) {
-        if (abs(mt.get(row, index)) >= eps) {
+        if (std::abs(mt.get(row, index)) >= eps) {
             alList.emplace_back(mt.get(row, index));
             auList.emplace_back(mt.get(index, row));
             jaList.emplace_back(index);
