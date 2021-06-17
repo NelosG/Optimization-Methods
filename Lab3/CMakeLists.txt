@@ -81,5 +81,6 @@ target_include_directories(Meth_Opt_Lab3
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/TestGenerator>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/TestRunner>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/Utils>)
-target_link_libraries(Meth_Opt_Lab3 PUBLIC logger-static ${Boost_LIBRARIES})
+
+target_link_libraries(Meth_Opt_Lab3 PUBLIC logger ${Boost_LIBRARIES})
 
