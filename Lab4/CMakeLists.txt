@@ -39,6 +39,8 @@ add_subdirectory(
 
 
 set(Methods_Sources
+        Methods/GoldenSection.h
+        Methods/GoldenSection.cpp
         Methods/method.h
         Methods/method.cpp
         Methods/Newton.h
@@ -47,6 +49,9 @@ set(Methods_Sources
         Methods/NewtonDirectionDescent.cpp
         Methods/NewtonOneDimension.h
         Methods/NewtonOneDimension.cpp
+
+        Methods/QuasiNewton.h
+        Methods/QuasiNewton.cpp
         Methods/BroadenFletcherChen.h
         Methods/BroadenFletcherChen.cpp
         Methods/Powell.h

@@ -16,6 +16,7 @@ void run(const Source &source, logger &lg, int method_mode, bool start) {
         }
         case (2): {
             meth = new NewtonOneDimension( );
+            meth->add_logger(lg);
             lg << "NewtonOneDimension" << '\n';
             break;
         }

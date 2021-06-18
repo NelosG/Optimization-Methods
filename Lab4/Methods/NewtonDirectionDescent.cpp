@@ -8,7 +8,7 @@ point NewtonDirectionDescent::minimum(extended_function f, point x0, double eps)
     iter = 1;
     point x(x0);
     point d(utils::multiply_vector_on_scalar(f.gradient(x), -1));
-    double r = count_lambda(f, x, d);
+    double r = count_alpha(f, x, d, eps);
     point s = utils::multiply_on_scalar(d, r);
     x.plus(s);
     do {
@@ -21,10 +21,9 @@ point NewtonDirectionDescent::minimum(extended_function f, point x0, double eps)
         } else {
             d = utils::negative(g);
         }
-        r = count_lambda(f, x, d);
+        r = count_alpha(f, x, d, eps);
         s = utils::multiply_on_scalar(d, r);
         x.plus(s);
-        //        std::cout << x.to_string() << '\n';
     } while (utils::norm(s) >= eps);
     return x;
 }

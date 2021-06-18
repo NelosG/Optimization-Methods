@@ -10,7 +10,10 @@ point NewtonOneDimension::minimum(extended_function f, point x0, double eps) {
     do {
         iter++;
         d = slay(f.hessian(x), utils::multiply_vector_on_scalar(f.gradient(x), -1));
-        double r = count_lambda(f, x, d);
+        double r = count_alpha(f, x, d, eps);
+        if(log) {
+            *lg << "one dimension: a = " << r << '\n';
+        }
         s = utils::multiply_on_scalar(d, r);
         x.plus(s);
     } while (utils::norm(s) >= eps);
