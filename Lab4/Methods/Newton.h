@@ -10,8 +10,6 @@
 #include <utils.h>
 
 class Newton : public method {
-    int iter = 0;
-
 public:
     point minimum(extended_function f, point x0, double eps) override;
 

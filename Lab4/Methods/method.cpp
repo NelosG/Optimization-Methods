@@ -51,7 +51,7 @@ point method::slay(std::vector<std::vector<double>> h, std::vector<double> f) {
 double method::count_lambda(extended_function function, point x, point d) {
     auto f = [&function, &x, &d](double l) { return function.value(utils::points_addition(x, utils::multiply_on_scalar(d, l))); };
     double PHI = 2 - (1 + sqrt(5)) / 2;
-    double EPS = 0.00001;
+    double EPS = 0.000001;
 
     double a = -1000, b = 1000, x1, x2, f1, f2;
     x1 = a + PHI * (b - a);

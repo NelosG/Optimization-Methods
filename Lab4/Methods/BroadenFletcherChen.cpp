@@ -11,7 +11,6 @@ point BroadenFletcherChen::minimum(extended_function f, point x0, double eps) {
     point gradient(f.gradient(x));
     size_t n = gradient.get_coordinates().size();
     std::vector<std::vector<double>> H = utils::create_E(n);
-    //    std::cout << x.to_string() << '\n';
     while (utils::norm(gradient) >= eps) {
         iter++;
         point p = utils::negative(utils::multiply_matrix_and_Point(H, gradient));
@@ -23,7 +22,6 @@ point BroadenFletcherChen::minimum(extended_function f, point x0, double eps) {
         H = get_next_H(H, utils::points_subtraction(nextX, x), utils::points_subtraction(next_gradient, gradient));
         x = nextX;
         gradient = next_gradient;
-        //        std::cout << x.to_string() << '\n';
     }
     return x;
 }

@@ -9,7 +9,6 @@ point Powell::minimum(extended_function f, point x0, double eps) {
     point w = utils::negative(point(f.gradient(x)));
     size_t n = w.get_coordinates().size();
     std::vector<std::vector<double>> H = utils::create_E(n);
-    //    std::cout << x.to_string() << '\n';
     while (utils::norm(w) >= eps) {
         iter++;
         point p = utils::multiply_matrix_and_Point(H, w);
@@ -21,7 +20,6 @@ point Powell::minimum(extended_function f, point x0, double eps) {
         H = get_next_H(H, utils::points_subtraction(next_x, x), utils::points_subtraction(next_w, w));
         x = next_x;
         w = next_w;
-        //        std::cout << x.to_string() << '\n';
     }
     return x;
 }

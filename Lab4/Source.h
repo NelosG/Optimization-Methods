@@ -42,7 +42,7 @@ public:
         return data[mod].point;
     }
 
-    void change_mod(int md) {
+    void set_mod(int md) {
         this->mod = md;
     }
 

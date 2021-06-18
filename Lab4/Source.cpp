@@ -139,13 +139,11 @@ void Source::initialise() {
     //data
     this->data = std::vector<Data>{
             Data(extended_function(f, gradF, hesF), point(std::vector<double>{4, 1})),
-            // 2.1 begins here, mod = 1
             Data(extended_function(f2, gradF2, hesF2), point(std::vector<double>{-1.2, 1})),
             Data(extended_function(f3, gradF3, hesF3), point(std::vector<double>{1, 1})),
             Data(extended_function(f4, gradF4, hesF4), point(std::vector<double>{1, 1, 1, 1})),
             Data(extended_function(f5, gradF5, hesF5), point(std::vector<double>{1, 1})),
-            // for 1.1: 3x^2+xy+2y^2-x-4y, min point: (0, 1)
+
             Data(extended_function(f6, gradF6, hesF6), point(std::vector<double>{-15, -5})),
-            // for 1.2: -y*sqrt(x)+2*y^2+x-14y, min point: (4, 4)
             Data(extended_function(f7, gradF7, hesF7), point(std::vector<double>{3, 5}))};
 }
