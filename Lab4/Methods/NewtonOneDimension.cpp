@@ -15,7 +15,7 @@ point NewtonOneDimension::minimum(extended_function f, point x0, double eps) {
             *lg << "one dimension: a = " << r << '\n';
         }
         s = utils::multiply_on_scalar(d, r);
-        x.plus(s);
+        x.add(s);
     } while (utils::norm(s) >= eps);
     return x;
 }

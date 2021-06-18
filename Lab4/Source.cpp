@@ -105,34 +105,35 @@ void Source::initialise() {
 
     //6
     auto f6 = [](const point &x) {
-        return (3 * pow(x.get(0), 2) + x.get(0) * x.get(1) +
-                2 * pow(x.get(1), 2) - x.get(0) - 4 * x.get(1));
+        return -x.get(0) * sqrt(x.get(1)) + 2 * pow(x.get(0), 2) - 7 * x.get(0) + x.get(1);
     };
     auto gradF6 = [](const point &x) {
         return std::vector<double>{
-                (6 * x.get(0) + x.get(1) - 1),
-                (x.get(0) + 4 * x.get(1) - 4)};
+                4 * x.get(0) - sqrt(x.get(1)) - 7,
+                (-x.get(0) / (2 * sqrt(x.get(1)))) + 1};
     };
     auto hesF6 = [](const point &x) {
         return std::vector<std::vector<double>>{
-                std::vector<double>{6, 1},
-                std::vector<double>{1, 4}};
+                        {4,
+                         -1 / (2 * sqrt(x.get(1)))},
+                        {-1 / (2 * sqrt(x.get(1))),
+                         x.get(0) / (4 * x.get(1) * sqrt(x.get(1)))}};
     };
 
 
     //7
     auto f7 = [](const point &x) {
-        return (-x.get(1) * sqrt(x.get(0)) + 2 * pow(x.get(1), 2) + x.get(0) - 14 * x.get(1));
+        return x.get(0) * x.get(0) + x.get(1) * x.get(1) + x.get(0) * x.get(1) + x.get(0) + x.get(1);
     };
     auto gradF7 = [](const point &x) {
         return std::vector<double>{
-                (-x.get(1) / (2 * sqrt(x.get(0)))) + 1,
-                (-sqrt(x.get(0)) + 4 * x.get(1) - 14)};
+                2 * x.get(0) + x.get(1) + 1,
+                x.get(0) + 2 * x.get(1) + 1};
     };
     auto hesF7 = [](const point &x) {
         return std::vector<std::vector<double>>{
-                std::vector<double>{x.get(1) / (4 * x.get(0) * sqrt(x.get(0))), -1 / (2 * sqrt(x.get(0)))},
-                std::vector<double>{-1 / (2 * sqrt(x.get(0))), 4}};
+                {2, 1},
+                {1, 2}};
     };
 
 
@@ -144,6 +145,11 @@ void Source::initialise() {
             Data(extended_function(f4, gradF4, hesF4), point(std::vector<double>{1, 1, 1, 1})),
             Data(extended_function(f5, gradF5, hesF5), point(std::vector<double>{1, 1})),
 
-            Data(extended_function(f6, gradF6, hesF6), point(std::vector<double>{-15, -5})),
-            Data(extended_function(f7, gradF7, hesF7), point(std::vector<double>{3, 5}))};
+            Data(extended_function(f6, gradF6, hesF6), point(std::vector<double>{0, 2})),
+            Data(extended_function(f6, gradF6, hesF6), point(std::vector<double>{0, 1})),
+            Data(extended_function(f6, gradF6, hesF6), point(std::vector<double>{1, 1})),
+
+            Data(extended_function(f7, gradF7, hesF7), point(std::vector<double>{-5, 5})),
+            Data(extended_function(f7, gradF7, hesF7), point(std::vector<double>{1, 1})),
+            Data(extended_function(f7, gradF7, hesF7), point(std::vector<double>{10, 20}))};
 }

@@ -30,11 +30,12 @@ public:
         return coordinates[i];
     }
 
-    void plus(point y) {
+    void add(point y) {
         for (int i = 0; i < y.coordinates.size(); i++) {
             coordinates[i] += y.coordinates[i];
         }
     }
+
     std::string to_string() const {
         std::stringstream ss;
         ss << "(";

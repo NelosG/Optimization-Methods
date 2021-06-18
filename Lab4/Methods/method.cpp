@@ -8,7 +8,6 @@
 #include <GoldenSection.h>
 
 double Max = 1.7976931348623157e+308;
-constexpr const static double EPS = 0.00001;
 
 point method::slay(std::vector<std::vector<double>> mt, std::vector<double> vec) {
     size_t n = mt.size();
@@ -19,7 +18,7 @@ point method::slay(std::vector<std::vector<double>> mt, std::vector<double> vec)
         int maxCoefficientInd = k;
         for (int i = k; i < n; i++) {
             double element = mt[i][k];
-            if (std::abs(element) - std::abs(maxCoefficient) > EPS) {
+            if (std::abs(element) - std::abs(maxCoefficient) > 0) {
                 maxCoefficient = element;
                 maxCoefficientInd = i;
             }
@@ -47,8 +46,9 @@ point method::slay(std::vector<std::vector<double>> mt, std::vector<double> vec)
     }
     return point(x);
 }
+
 double method::count_alpha(extended_function function, point x, point d, double eps) {
-    return GoldenSection::optimize(-10, 10, eps, [&function, &x, &d](double l) {
+    return GoldenSection::optimize(-1000, 1000, eps, [&function, &x, &d](double l) {
         return function.value(utils::points_addition(x, utils::multiply_on_scalar(d, l)));
     });
 }
