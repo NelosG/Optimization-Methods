@@ -12,6 +12,7 @@
 #include <point.h>
 
 class Source;
+
 class Data {
     extended_function function;
     point point;
@@ -19,15 +20,17 @@ class Data {
 public:
     Data(extended_function function, const class point &point) : function(std::move(function)), point(point) {
     }
+
     friend class Source;
 };
+
 class Source {
     int mod = 1;
     std::vector<Data> data;
 
 public:
     Source() {
-        initialise();
+        initialise( );
     }
 
     [[nodiscard]] extended_function get_function() const {
@@ -35,7 +38,7 @@ public:
     }
 
     [[nodiscard]] size_t get_mods_count() const {
-        return data.size();
+        return data.size( );
     }
 
     [[nodiscard]] point get_point() const {

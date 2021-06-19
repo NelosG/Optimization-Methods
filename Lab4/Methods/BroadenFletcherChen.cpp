@@ -5,11 +5,11 @@
 #include "BroadenFletcherChen.h"
 
 std::vector<std::vector<double>> BroadenFletcherChen::get_next_H(const std::vector<std::vector<double>> &H,
-                                            const point &sPoint,
-                                            const point &yPoint) {
-    std::vector<double> s = sPoint.get_coordinates();
-    std::vector<double> y = yPoint.get_coordinates();
-    size_t n = s.size();
+                                                                 const point &sPoint,
+                                                                 const point &yPoint) {
+    std::vector<double> s = sPoint.get_coordinates( );
+    std::vector<double> y = yPoint.get_coordinates( );
+    size_t n = s.size( );
 
     double del = 0;
     for (int i = 0; i < n; i++) {

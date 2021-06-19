@@ -7,11 +7,13 @@
 point Newton::minimum(extended_function f, point x0, double eps) {
     iter = 1;
     point x(x0);
-    point p = slay(f.hessian(x), utils::multiply_vector_on_scalar(f.gradient(x), -1));
-    while (utils::norm(p) >= eps) {
+    point s(utils::negative(point(f.gradient(x))));
+    x.add(s);
+    do {
         iter++;
-        x.add(p);
-        p = slay(f.hessian(x), utils::multiply_vector_on_scalar(f.gradient(x), -1));
-    }
+        point g(f.gradient(x));
+        s = slay(f.hessian(x), utils::negative(g).get_coordinates( ));
+        x.add(s);
+    } while (utils::norm(s) >= eps);
     return x;
 }

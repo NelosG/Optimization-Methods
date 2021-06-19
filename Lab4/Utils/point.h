@@ -31,7 +31,7 @@ public:
     }
 
     void add(point y) {
-        for (int i = 0; i < y.coordinates.size(); i++) {
+        for (int i = 0; i < y.coordinates.size( ); i++) {
             coordinates[i] += y.coordinates[i];
         }
     }
@@ -42,7 +42,7 @@ public:
         for (auto i : coordinates) {
             ss << i << "; ";
         }
-        return ss.str().substr(0, ss.str().size() - 2) + ")";
+        return ss.str( ).substr(0, ss.str( ).size( ) - 2) + ")";
     }
 };
 

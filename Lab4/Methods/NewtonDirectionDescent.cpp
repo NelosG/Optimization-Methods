@@ -14,7 +14,7 @@ point NewtonDirectionDescent::minimum(extended_function f, point x0, double eps)
     do {
         iter++;
         point g(f.gradient(x));
-        s = slay(f.hessian(x), utils::negative(g).get_coordinates());
+        s = slay(f.hessian(x), utils::negative(g).get_coordinates( ));
         if (utils::points_multiplication(s, g) < 0) {
             d = s;
         } else {

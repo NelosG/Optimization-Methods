@@ -6,7 +6,8 @@
 
 #include <cmath>
 
-double GoldenSection::optimize(double leftBound, double rightBound, double eps, const std::function<double(double)> &func) {
+double
+GoldenSection::optimize(double leftBound, double rightBound, double eps, const std::function<double(double)> &func) {
     const static double TAU = (std::sqrt(5) - 1) / 2;
     double a = leftBound, b = rightBound;
     double x1 = a + (3 - std::sqrt(5)) * (b - a) / 2;

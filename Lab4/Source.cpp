@@ -64,23 +64,57 @@ void Source::initialise() {
 
     // 4
     auto f4 = [](const point &x) {
-        return (pow(x.get(0) + 10 * x.get(1), 2) + 5 * pow(x.get(2) - x.get(3), 2) +
-                pow(x.get(1) - 2 * x.get(2), 4) + 10 * pow(x.get(0) - x.get(3), 4));
+        return (x.get(0) + 10 * x.get(1)) * (x.get(0) + 10 * x.get(1))
+               + 5 * (x.get(2) - x.get(3)) * (x.get(2) - x.get(3))
+               + (x.get(1) - 2 * x.get(2)) * (x.get(1) - 2 * x.get(2)) * (x.get(1) - 2 * x.get(2)) *
+                 (x.get(1) - 2 * x.get(2))
+               + 10 * (x.get(0) - x.get(3)) * (x.get(0) - x.get(3)) * (x.get(0) - x.get(3)) * (x.get(0) - x.get(3));
     };
 
     auto gradF4 = [](const point &x) {
         return std::vector<double>{
-                2 * (20 * pow(x.get(0) - x.get(3), 3) + x.get(0) + 10 * x.get(1)),
-                4 * (5 * (x.get(0) + 10 * x.get(1)) + pow(x.get(1) - 2 * x.get(2), 3)),
-                10 * (x.get(2) - x.get(3)) - 8 * pow(x.get(1) - 2 * x.get(2), 3),
-                10 * (-4 * pow(x.get(0) - x.get(3), 3) - x.get(2) + x.get(3))};
+                2 *
+                (20 * (x.get(0) - x.get(3)) * (x.get(0) - x.get(3)) * (x.get(0) - x.get(3)) + x.get(0) + 10 * x.get(1)),
+                4 * (5 * (x.get(0) + 10 * x.get(1)) +
+                     (x.get(1) - 2 * x.get(2)) * (x.get(1) - 2 * x.get(2)) * (x.get(1) - 2 * x.get(2))),
+                10 * (x.get(2) - x.get(3)) -
+                8 * (x.get(1) - 2 * x.get(2)) * (x.get(1) - 2 * x.get(2)) * (x.get(1) - 2 * x.get(2)),
+                10 *
+                (-4 * (x.get(0) - x.get(3)) * (x.get(0) - x.get(3)) * (x.get(0) - x.get(3)) + x.get(3) - x.get(2))};
     };
     auto hesF4 = [](const point &x) {
         return std::vector<std::vector<double>>{
-                std::vector<double>{120 * pow(x.get(0) - x.get(3), 2) + 2, 20, 0, -120 * pow(x.get(0) - x.get(3), 2)},
-                std::vector<double>{20, 200 + 12 * pow((x.get(1) - 2 * x.get(2)), 2), -24 * pow(x.get(1) - 2 * x.get(2), 2), 0},
-                std::vector<double>{0, -24 * pow(x.get(1) - 2 * x.get(2), 2), 10 + 48 * (x.get(1) - 2 * x.get(2)), -10},
-                std::vector<double>{-120 * pow(x.get(0) - x.get(3), 2), 0, -10, 120 * pow(x.get(0) - x.get(3), 2) + 10}};
+                {120 * (x.get(0) - x.get(3)) * (x.get(0) - x.get(3)) + 2, 20,                              0,
+                                                                                                                       -120 *
+                                                                                                                       (x.get(0) -
+                                                                                                                        x.get(3)) *
+                                                                                                                       (x.get(0) -
+                                                                                                                        x.get(3))},
+                {20,                                                      12 * (x.get(1) - 2 * x.get(2)) *
+                                                                          (x.get(1) - 2 * x.get(2)) + 200, -24 *
+                                                                                                           (x.get(1) -
+                                                                                                            2 *
+                                                                                                            x.get(2)) *
+                                                                                                           (x.get(1) -
+                                                                                                            2 *
+                                                                                                            x.get(2)), 0},
+                {0,                                                       -24 * (x.get(1) - 2 * x.get(2)) *
+                                                                          (x.get(1) - 2 * x.get(2)),       48 *
+                                                                                                           (x.get(1) -
+                                                                                                            2 *
+                                                                                                            x.get(2)) *
+                                                                                                           (x.get(1) -
+                                                                                                            2 *
+                                                                                                            x.get(2)) +
+                                                                                                           10,         -10},
+                {-120 * (x.get(0) - x.get(3)) * (x.get(0) -
+                                                 x.get(3)),               0,                               -10,        120 *
+                                                                                                                       (x.get(0) -
+                                                                                                                        x.get(3)) *
+                                                                                                                       (x.get(0) -
+                                                                                                                        x.get(3)) +
+                                                                                                                       10}
+        };
     };
 
 
@@ -91,16 +125,62 @@ void Source::initialise() {
     };
     auto gradF5 = [](const point &x) {
         return std::vector<double>{
-                (648 * (x.get(0) - 2)) / pow(9 * pow(x.get(0), 2) - 36 * x.get(0) + 4 * pow(x.get(1), 2) - 8 * x.get(1) + 76, 2) + (x.get(0) - 1) / pow(0.25 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2),
-                2.0 / 9 * (x.get(1) - 1) * (2.0 / pow(0.25 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2) + 1.0 / pow(0.25 * pow(x.get(0) - 2, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2))};
+                (648 * (x.get(0) - 2)) /
+                pow(9 * pow(x.get(0), 2) - 36 * x.get(0) + 4 * pow(x.get(1), 2) - 8 * x.get(1) + 76, 2) +
+                (x.get(0) - 1) / pow(0.25 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2),
+                2.0 / 9 * (x.get(1) - 1) *
+                (2.0 / pow(0.25 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2) +
+                 1.0 / pow(0.25 * pow(x.get(0) - 2, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2))};
     };
     auto hesF5 = [](const point &x) {
         return std::vector<std::vector<double>>{
-                std::vector<double>{(-pow(-1 + x.get(0), 2) / pow(1 + 0.25 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 3) +
-                                     1.0 / pow(1 + 0.25 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 2) - (23328 * pow(-2 + x.get(0), 2)) / pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) - 8 * x.get(1) + 4 * x.get(1) * x.get(1), 3) + 648 / pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) - 8 * x.get(1) + 4 * x.get(1) * x.get(1), 2)),
-                                    4.0 / 9 * (-1 + x.get(1)) * (-(-1 + x.get(0)) / pow(1 + 1.0 / 4 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 3) - (23328 * (-2 + x.get(0))) / pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) - 8 * x.get(1) + 4 * x.get(1) * x.get(1), 3))},
-                std::vector<double>{4.0 / 9 * (-1 + x.get(1)) * (-(-1 + x.get(0)) / pow(1 + 1.0 / 4 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 3) - (23328 * (-2 + x.get(0))) / pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) - 8 * x.get(1) + 4 * x.get(1) * x.get(1), 3)),
-                                    2.0 / 9 * (4.0 / 9 * pow(x.get(1) - 1, 2) * (-2.0 / pow(1.0 / 4 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 3) - 1.0 / pow(1.0 / 4 * pow(x.get(0) - 2, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 3)) + 1.0 / pow(1.0 / 4 * pow(x.get(0) - 2, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2) + 2.0 / pow(1.0 / 4 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2))}};
+                std::vector<double>{(-pow(-1 + x.get(0), 2) /
+                                     pow(1 + 0.25 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 3) +
+                                     1.0 / pow(1 + 0.25 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 2) -
+                                     (23328 * pow(-2 + x.get(0), 2)) /
+                                     pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) - 8 * x.get(1) +
+                                         4 * x.get(1) * x.get(1), 3) + 648 / pow(76 - 36 * x.get(0) +
+                                                                                 9 * x.get(0) * x.get(0) -
+                                                                                 8 * x.get(1) + 4 * x.get(1) * x.get(1),
+                                                                                 2)),
+                                    4.0 / 9 * (-1 + x.get(1)) * (-(-1 + x.get(0)) /
+                                                                 pow(1 + 1.0 / 4 * pow(-1 + x.get(0), 2) +
+                                                                     1.0 / 9 * pow(-1 + x.get(1), 2), 3) -
+                                                                 (23328 * (-2 + x.get(0))) /
+                                                                 pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) -
+                                                                     8 * x.get(1) + 4 * x.get(1) * x.get(1), 3))},
+                std::vector<double>{4.0 / 9 * (-1 + x.get(1)) * (-(-1 + x.get(0)) /
+                                                                 pow(1 + 1.0 / 4 * pow(-1 + x.get(0), 2) +
+                                                                     1.0 / 9 * pow(-1 + x.get(1), 2), 3) -
+                                                                 (23328 * (-2 + x.get(0))) /
+                                                                 pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) -
+                                                                     8 * x.get(1) + 4 * x.get(1) * x.get(1), 3)),
+                                    2.0 / 9 * (4.0 / 9 * pow(x.get(1) - 1, 2) * (-2.0 /
+                                                                                 pow(1.0 / 4 * pow(x.get(0) - 1, 2) +
+                                                                                     1.0 / 9 * pow(x.get(1) - 1, 2) + 1,
+                                                                                     3) - 1.0 / pow(1.0 / 4 *
+                                                                                                    pow(x.get(0) - 2,
+                                                                                                        2) + 1.0 / 9 *
+                                                                                                             pow(x.get(
+                                                                                                                     1) -
+                                                                                                                 1, 2) +
+                                                                                                    1, 3)) + 1.0 /
+                                                                                                             pow(1.0 /
+                                                                                                                 4 *
+                                                                                                                 pow(x.get(
+                                                                                                                         0) -
+                                                                                                                     2,
+                                                                                                                     2) +
+                                                                                                                 1.0 /
+                                                                                                                 9 *
+                                                                                                                 pow(x.get(
+                                                                                                                         1) -
+                                                                                                                     1,
+                                                                                                                     2) +
+                                                                                                                 1, 2) +
+                                               2.0 /
+                                               pow(1.0 / 4 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1,
+                                                   2))}};
     };
 
     //6
@@ -114,10 +194,10 @@ void Source::initialise() {
     };
     auto hesF6 = [](const point &x) {
         return std::vector<std::vector<double>>{
-                        {4,
-                         -1 / (2 * sqrt(x.get(1)))},
-                        {-1 / (2 * sqrt(x.get(1))),
-                         x.get(0) / (4 * x.get(1) * sqrt(x.get(1)))}};
+                {4,
+                        -1 / (2 * sqrt(x.get(1)))},
+                {-1 / (2 * sqrt(x.get(1))),
+                        x.get(0) / (4 * x.get(1) * sqrt(x.get(1)))}};
     };
 
 

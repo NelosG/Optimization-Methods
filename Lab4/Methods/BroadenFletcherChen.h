@@ -17,8 +17,8 @@ public:
 
 private:
     std::vector<std::vector<double>> get_next_H(const std::vector<std::vector<double>> &H,
-                                                       const point &sPoint,
-                                                       const point &yPoint) override;
+                                                const point &sPoint,
+                                                const point &yPoint) override;
 };
 
 

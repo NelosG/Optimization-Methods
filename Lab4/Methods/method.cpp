@@ -10,7 +10,7 @@
 double Max = 1.7976931348623157e+308;
 
 point method::slay(std::vector<std::vector<double>> mt, std::vector<double> vec) {
-    size_t n = mt.size();
+    size_t n = mt.size( );
     std::vector<double> x(n, 0);
     int total_iter = 0;
     for (int k = 0; k < n - 1; k++) {
@@ -31,7 +31,7 @@ point method::slay(std::vector<std::vector<double>> mt, std::vector<double> vec)
         for (int i = k + 1; i < n; i++) {
             double ik = mt[i][k];
             for (int j = k; j < n; j++) {
-                mt[i][j] =  mt[i][j] - ik * mt[k][j] / kk;
+                mt[i][j] = mt[i][j] - ik * mt[k][j] / kk;
                 ++total_iter;
             }
             vec[i] -= ik * vec[k] / kk;
@@ -48,7 +48,18 @@ point method::slay(std::vector<std::vector<double>> mt, std::vector<double> vec)
 }
 
 double method::count_alpha(extended_function function, point x, point d, double eps) {
-    return GoldenSection::optimize(-1000, 1000, eps, [&function, &x, &d](double l) {
-        return function.value(utils::points_addition(x, utils::multiply_on_scalar(d, l)));
-    });
+    auto uniFunction = [&function, &x, &d](double alpha) {
+        return function.value(utils::points_addition(x, utils::multiply_on_scalar(d, alpha)));
+    };
+    double lo = -10, hi = 200;
+    double alpha = hi / 10000;
+    while (alpha < hi) {
+        double minimum = GoldenSection::optimize(lo, alpha, 1e-9, uniFunction);
+        if (alpha - minimum <= eps) {
+            alpha *= 2;
+        } else {
+            return minimum;
+        }
+    }
+    return alpha;
 }

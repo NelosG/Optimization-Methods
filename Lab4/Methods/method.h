@@ -16,7 +16,7 @@ class method {
 
 protected:
     int iter = 0;
-    logger* lg;
+    logger *lg;
     bool log = false;
 public:
     virtual point minimum(extended_function f, point x0, double eps) = 0;
@@ -29,11 +29,12 @@ public:
 
     static double count_alpha(extended_function function, point x, point d, double eps);
 
-    void add_logger(logger& lgg){
+    void add_logger(logger &lgg) {
         this->lg = &lgg;
         log = true;
     }
 
     virtual ~method() = default;
 };
+
 #endif//METHOD_H

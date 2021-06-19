@@ -13,6 +13,7 @@
 class NewtonDirectionDescent : public method {
 public:
     point minimum(extended_function f, point x0, double eps) override;
+
     ~NewtonDirectionDescent() override = default;
 };
 

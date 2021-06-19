@@ -13,8 +13,8 @@ public:
 
 protected:
     virtual std::vector<std::vector<double>> get_next_H(const std::vector<std::vector<double>> &H,
-                                                       const point &dx_prev,
-                                                       const point &yPoint) = 0;
+                                                        const point &dx_prev,
+                                                        const point &yPoint) = 0;
 };
 
 

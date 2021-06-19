@@ -15,4 +15,5 @@ public:
 
     ~Newton() override = default;
 };
+
 #endif//NEWTON_H
