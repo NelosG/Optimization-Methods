@@ -1,12 +1,5 @@
 # Optimization-methods 
-Лабораторная работа №1 
-Реализовать алгоритмы одномерной минимизации функции: 
-- метод дихотомии, 
-- метод золотого сечения, 
-- метод Фиббоначи,
-- метод парабол, 
-- комбинированный метод Брента.
-- Функция: f(x) = log10(x - 2) ^ 2 + log10(10 - x) ^ 2.0 - x ^ 0.2 -> min на интервале [6;9.9]
-
-
-- **[Report](https://github.com/AntonAsmirko/Optimization-Methods/tree/main/Report)**
+- [Лабораторная работа №1(Методы одномерной оптимизации)](https://github.com/NelosG/Optimization-Methods/tree/main/Lab1-2) 
+- [Лабораторная работа №2(Методы градиентоного и наискорейшего спуска, а так же метод сопряженных градиентов)](https://github.com/NelosG/Optimization-Methods/tree/main/Lab1-2) 
+- [Лабораторная работа №3(Решение СЛАУ)](https://github.com/NelosG/Optimization-Methods/tree/main/Lab3)
+- [Лабораторная работа №4(метод Ньютона и его модификаций, в том числе квазиньютоновские методы)](https://github.com/NelosG/Optimization-Methods/tree/main/Lab4)
